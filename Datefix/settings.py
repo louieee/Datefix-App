@@ -180,9 +180,12 @@ AWS_ACCESS_KEY_ID = config('AWS_ID')
 AWS_SECRET_ACCESS_KEY = config('AWS_KEY')
 AWS_STORAGE_BUCKET_NAME = config('AWS_BUCKET_NAME')
 S3DIRECT_REGION = 'us-east-2'
-STATIC_URL = f'http://{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com/static'
+STATIC_URL = f'https://{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com/static'
 ADMIN_MEDIA_PREFIX = f'{STATIC_URL}admin/'
 
+STATICFILES_FINDERS = ('django.contrib.staticfiles.finders.FileSystemFinder', 'django.contrib.staticfiles.finders'
+                                                                              '.AppDirectoriesFinder',
+                       )
+AWS_DEFAULT_ACL = None
+
 MEDIA_URL = f'{STATIC_URL}media/'
-
-
