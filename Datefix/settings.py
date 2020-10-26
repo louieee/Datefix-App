@@ -184,5 +184,5 @@ STATIC_URL = f'http://{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com/static'
 ADMIN_MEDIA_PREFIX = f'{STATIC_URL}admin/'
 
 MEDIA_URL = f'{STATIC_URL}media/'
-STATIC_ROOT = STATIC_URL
+
 
