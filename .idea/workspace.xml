@@ -27,7 +27,6 @@
   <component name="ChangeListManager">
     <list default="true" id="9a953797-7a89-49b1-8b38-8033e02ea492" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Datefix/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/Datefix/settings.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -349,7 +348,7 @@
       <workItem from="1598441541291" duration="4079000" />
       <workItem from="1598798746152" duration="1192000" />
       <workItem from="1600205836265" duration="12065000" />
-      <workItem from="1603733229624" duration="10872000" />
+      <workItem from="1603733229624" duration="11855000" />
     </task>
     <task id="LOCAL-00001" summary="Revert &quot;merge with louieee&quot;&#10;&#10;This reverts commit d2184739">
       <created>1597921264350</created>
@@ -443,10 +442,10 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="184" y="9" key="SettingsEditor/0.0.1366.728@0.0.1366.728" timestamp="1595665742997" />
-    <state x="275" y="97" key="Vcs.Push.Dialog.v2" timestamp="1603748152092">
+    <state x="275" y="97" key="Vcs.Push.Dialog.v2" timestamp="1603749651654">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="275" y="97" key="Vcs.Push.Dialog.v2/0.0.1366.728@0.0.1366.728" timestamp="1603748152092" />
+    <state x="275" y="97" key="Vcs.Push.Dialog.v2/0.0.1366.728@0.0.1366.728" timestamp="1603749651654" />
     <state x="0" y="0" width="585" height="728" key="find.popup" timestamp="1600209418176">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
