@@ -156,6 +156,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'Datefix/static')]
 
 LOGOUT_REDIRECT_URL = '/'
 
@@ -180,7 +181,9 @@ AWS_ACCESS_KEY_ID = config('AWS_ID')
 AWS_SECRET_ACCESS_KEY = config('AWS_KEY')
 AWS_STORAGE_BUCKET_NAME = config('AWS_BUCKET_NAME')
 
-STATIC_URL = f'http://{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com/'
+STATIC_URL = f'http://{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com/static'
 ADMIN_MEDIA_PREFIX = f'{STATIC_URL}admin/'
 
-MEDIA_URL = f'{STATIC_URL}/media/'
+MEDIA_URL = f'{STATIC_URL}media/'
+STATIC_ROOT = STATIC_URL
+
