@@ -20,12 +20,16 @@
       <path>
         <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
         <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
-        <item name="BRANCH:master" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="BRANCH:master_" type="e8cecc67:BranchNodeDescriptor" />
       </path>
     </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9a953797-7a89-49b1-8b38-8033e02ea492" name="Default Changelist" comment="" />
+    <list default="true" id="9a953797-7a89-49b1-8b38-8033e02ea492" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Datefix/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/Datefix/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/rds-combined-ca-bundle.pem" beforeDir="false" afterPath="$PROJECT_DIR$/rds-combined-ca-bundle.pem" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -345,6 +349,7 @@
       <workItem from="1598441541291" duration="4079000" />
       <workItem from="1598798746152" duration="1192000" />
       <workItem from="1600205836265" duration="12065000" />
+      <workItem from="1603733229624" duration="4118000" />
     </task>
     <task id="LOCAL-00001" summary="Revert &quot;merge with louieee&quot;&#10;&#10;This reverts commit d2184739">
       <created>1597921264350</created>
@@ -380,7 +385,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="master" />
+                        <option value="master_" />
                       </list>
                     </value>
                   </entry>
@@ -426,22 +431,6 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="469" y="231" key="Github.CreatePullRequestDialog/0.0.1366.728@0.0.1366.728" timestamp="1600219490128" />
-    <state width="1323" height="335" key="GridCell.Tab.0.bottom" timestamp="1593626037950">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state width="1323" height="335" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1593626037950" />
-    <state width="1323" height="335" key="GridCell.Tab.0.center" timestamp="1593626037949">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state width="1323" height="335" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1593626037949" />
-    <state width="1323" height="335" key="GridCell.Tab.0.left" timestamp="1593626037948">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state width="1323" height="335" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1593626037948" />
-    <state width="1323" height="335" key="GridCell.Tab.0.right" timestamp="1593626037949">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state width="1323" height="335" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1593626037949" />
     <state x="81" y="43" key="MergeDialog" timestamp="1598115874089">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
@@ -454,14 +443,10 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="184" y="9" key="SettingsEditor/0.0.1366.728@0.0.1366.728" timestamp="1595665742997" />
-    <state x="487" y="61" key="VCS.ChangeListViewerDialog" timestamp="1592326440981">
+    <state x="275" y="97" key="Vcs.Push.Dialog.v2" timestamp="1603733416362">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="487" y="61" key="VCS.ChangeListViewerDialog/0.0.1366.728@0.0.1366.728" timestamp="1592326440981" />
-    <state x="275" y="97" key="Vcs.Push.Dialog.v2" timestamp="1600219453965">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state x="275" y="97" key="Vcs.Push.Dialog.v2/0.0.1366.728@0.0.1366.728" timestamp="1600219453965" />
+    <state x="275" y="97" key="Vcs.Push.Dialog.v2/0.0.1366.728@0.0.1366.728" timestamp="1603733416362" />
     <state x="0" y="0" width="585" height="728" key="find.popup" timestamp="1600209418176">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
@@ -474,10 +459,6 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="480" y="152" key="git4idea.merge.GitMergeDialog/0.0.1366.728@0.0.1366.728" timestamp="1598116558504" />
-    <state x="415" y="152" key="git4idea.merge.GitPullDialog" timestamp="1592334026729">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state x="415" y="152" key="git4idea.merge.GitPullDialog/0.0.1366.728@0.0.1366.728" timestamp="1592334026729" />
     <state x="346" y="49" width="672" height="678" key="search.everywhere.popup" timestamp="1600214484286">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
