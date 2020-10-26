@@ -179,7 +179,7 @@ STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 AWS_ACCESS_KEY_ID = config('AWS_ID')
 AWS_SECRET_ACCESS_KEY = config('AWS_KEY')
 AWS_STORAGE_BUCKET_NAME = config('AWS_BUCKET_NAME')
-
+S3DIRECT_REGION = 'us-east-2'
 STATIC_URL = f'http://{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com/static'
 ADMIN_MEDIA_PREFIX = f'{STATIC_URL}admin/'
 
