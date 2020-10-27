@@ -25,11 +25,7 @@
     </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9a953797-7a89-49b1-8b38-8033e02ea492" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Datefix/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/Datefix/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/rds-combined-ca-bundle.pem" beforeDir="false" afterPath="$PROJECT_DIR$/rds-combined-ca-bundle.pem" afterDir="false" />
-    </list>
+    <list default="true" id="9a953797-7a89-49b1-8b38-8033e02ea492" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -78,14 +74,15 @@
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\hp\PycharmProjects\datefix-1\Payment" />
-      <recent name="C:\Users\hp\PycharmProjects\datefix-1\Secret" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\hp\PycharmProjects\datefix-1\Datefix\static\images" />
       <recent name="C:\Users\hp\PycharmProjects\datefix-1\Datefix\static" />
       <recent name="C:\Users\hp\PycharmProjects\datefix-1\Account\templates\Account" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\hp\PycharmProjects\datefix-1" />
+      <recent name="C:\Users\hp\PycharmProjects\datefix-1\Payment" />
+      <recent name="C:\Users\hp\PycharmProjects\datefix-1\Secret" />
     </key>
   </component>
   <component name="RestClientSettings">
@@ -349,7 +346,7 @@
       <workItem from="1598441541291" duration="4079000" />
       <workItem from="1598798746152" duration="1192000" />
       <workItem from="1600205836265" duration="12065000" />
-      <workItem from="1603733229624" duration="4118000" />
+      <workItem from="1603733229624" duration="13193000" />
     </task>
     <task id="LOCAL-00001" summary="Revert &quot;merge with louieee&quot;&#10;&#10;This reverts commit d2184739">
       <created>1597921264350</created>
@@ -443,10 +440,10 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="184" y="9" key="SettingsEditor/0.0.1366.728@0.0.1366.728" timestamp="1595665742997" />
-    <state x="275" y="97" key="Vcs.Push.Dialog.v2" timestamp="1603733416362">
+    <state x="275" y="97" key="Vcs.Push.Dialog.v2" timestamp="1603751479210">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="275" y="97" key="Vcs.Push.Dialog.v2/0.0.1366.728@0.0.1366.728" timestamp="1603733416362" />
+    <state x="275" y="97" key="Vcs.Push.Dialog.v2/0.0.1366.728@0.0.1366.728" timestamp="1603751479210" />
     <state x="0" y="0" width="585" height="728" key="find.popup" timestamp="1600209418176">
       <screen x="0" y="0" width="1366" height="728" />
     </state>

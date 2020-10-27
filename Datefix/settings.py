@@ -40,11 +40,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'storages'
 ]
 
 MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -156,11 +156,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'Datefix/static')]
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-STATIC_URL = '/static/'
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 LOGOUT_REDIRECT_URL = '/'
 
 AUTH_USER_MODEL = "Account.User"
@@ -176,4 +172,21 @@ import dj_database_url
 prod_db = dj_database_url.config()
 DATABASES['default'].update(prod_db)
 
-# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+AWS_QUERYSTRING_AUTH = False
+
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+AWS_ACCESS_KEY_ID = config('AWS_ID')
+AWS_SECRET_ACCESS_KEY = config('AWS_KEY')
+AWS_STORAGE_BUCKET_NAME = config('AWS_BUCKET_NAME')
+S3DIRECT_REGION = 'us-east-2'
+STATIC_URL = f'https://{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com/static'
+ADMIN_MEDIA_PREFIX = f'{STATIC_URL}admin/'
+
+STATICFILES_FINDERS = ('django.contrib.staticfiles.finders.FileSystemFinder', 'django.contrib.staticfiles.finders'
+                                                                              '.AppDirectoriesFinder',
+                       )
+AWS_DEFAULT_ACL = None
+
+MEDIA_URL = f'{STATIC_URL}media/'
