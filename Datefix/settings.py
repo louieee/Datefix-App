@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 
 import os
 from decouple import config, Csv
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -24,9 +25,7 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
-
 
 # Application definition
 
@@ -78,7 +77,6 @@ CHANNEL_LAYERS = {"default": {
         "hosts": [os.environ.get('REDIS_URL', 'redis://redis:6379')],
         # "hosts": [('localhost', 6379)],
 
-
     }
 
 }
@@ -105,7 +103,6 @@ DATABASES = {
     }
 }
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-
 
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
@@ -174,6 +171,7 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 import dj_database_url
+
 
 prod_db = dj_database_url.config()
 DATABASES['default'].update(prod_db)
