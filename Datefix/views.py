@@ -41,7 +41,7 @@ def password_reset(request):
             link_ = f'http://{request.get_host()}/confirm/?uidb64={secret}&token={token}'
             send_email(user.username, 'Password Reset',
                        f"You have requested to reset your password. To initiate the password reset process for your"
-                       f" {user.get_username} Datefix Account, Follow the directions below.", user.email, link_,
+                       f" {user.username} Datefix Account, Follow the directions below.", user.email, link_,
                        None)
             return redirect('password_reset_done')
         except User.DoesNotExist:
@@ -102,6 +102,3 @@ def reset_confirm(request):
             return redirect('reset_confirm')
 
 
-def test_email(request):
-    send_email(user='Louisane',to='louis.paul9095', title="Test Mail", message="Welcome to Datefix", link='https://datefix.net')
-    return HttpResponse('sent')
