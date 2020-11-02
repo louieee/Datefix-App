@@ -15,7 +15,7 @@ def send_email(user, title, message, to, link=None, attachments=None):
 		html_message = render_to_string('Account/mailer.html',
 										{"message": message, "subject": title, "user": user})
 	plain_message = strip_tags(html_message)
-	from_email = 'admin@datefix.com'
+	from_email = 'admin@datefix.net'
 
 	message = Mail(
 		from_email=from_email,
