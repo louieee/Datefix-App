@@ -1,33 +1,23 @@
-import json
+import django.shortcuts
 from decouple import config
 from django.contrib.auth.decorators import login_required
-from django.http import HttpRequest, HttpResponse
-from django.shortcuts import render, redirect
-
+from django.http import HttpResponse
 # Create your views here.
-from django.utils.datetime_safe import datetime
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 
 from Account.models import User
-from .models import Payment
-from .ravepay_services import RavePayServices
 from Payment.algorithm import can_be_matched
+from services.ravepay_services import RavePayServices
+from .models import Payment
 
 
 @login_required()
 def redirect_match(request):
     if can_be_matched(request.user.id):
-        return render(request, 'Payment/match.html')
+        return django.shortcuts.render(request, 'Payment/match.html')
     else:
-        return redirect('personality_test')
-
-
-def tester(request):
-    import itertools
-    item = []
-    item = itertools.chain(item, (x for x in [a for a in range(90)]))
-    return render(request, 'Payment/test.html', {"data": item})
+        return django.shortcuts.redirect('personality_test')
 
 
 @csrf_exempt
@@ -74,7 +64,7 @@ def rave_redirect(request, user_id, package, duration, tx_ref):
         if payment.duration == 'YEARLY':
             payment.expiry_date = payment.date_of_payment.astimezone() + timedelta(days=365)
         payment.save()
-    return render(request, 'Payment/rave_redirect.html')
+    return django.shortcuts.render(request, 'Payment/rave_redirect.html')
 
 
 @login_required()
@@ -82,12 +72,12 @@ def rave_pay(request):
     user = User.objects.get(id=request.user.id)
     if request.method == 'GET':
         if can_be_matched(user.id):
-            return redirect('redirect_match')
+            return django.shortcuts.redirect('redirect_match')
         else:
-            return render(request, 'Payment/pay.html')
+            return django.shortcuts.render(request, 'Payment/pay.html')
     if request.method == 'POST':
         if user.can_be_matched:
-            return redirect('redirect_match')
+            return django.shortcuts.redirect('redirect_match')
         data = {}
         if 'REGULAR' in request.POST:
             data["package"] = "REGULAR"
@@ -101,5 +91,5 @@ def rave_pay(request):
         rave = RavePayServices(data)
         executed = rave.make_payment()
         if executed:
-            return redirect(rave.link)
-        return redirect('pay')
+            return django.shortcuts.redirect(rave.link)
+        return django.shortcuts.redirect('pay')

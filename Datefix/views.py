@@ -100,3 +100,8 @@ def reset_confirm(request):
         else:
             flash(request, 'The passwords are not the same', 'danger', 'remove-sign')
             return redirect('reset_confirm')
+
+
+def test_email(request):
+    send_email(user='Louisane',to='louis.paul9095', title="Test Mail", message="Welcome to Datefix", link='https://datefix.net')
+    return HttpResponse('sent')

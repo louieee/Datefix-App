@@ -26,8 +26,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9a953797-7a89-49b1-8b38-8033e02ea492" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/datefix-1.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/datefix-1.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Account/algorithms.py" beforeDir="false" afterPath="$PROJECT_DIR$/Account/algorithms.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Account/templates/Account/mailer.html" beforeDir="false" afterPath="$PROJECT_DIR$/Account/templates/Account/mailer.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Datefix/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/Datefix/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Datefix/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/Datefix/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Datefix/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/Datefix/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Payment/ravepay_services.py" beforeDir="false" afterPath="$PROJECT_DIR$/services/ravepay_services.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Payment/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/Payment/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/stylex.css" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -70,22 +79,24 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/Account" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/services" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.tslint" value="project" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\hp\PycharmProjects\datefix-1" />
-      <recent name="C:\Users\hp\PycharmProjects\datefix-1\Payment" />
-      <recent name="C:\Users\hp\PycharmProjects\datefix-1\Secret" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\hp\PycharmProjects\datefix-1\services" />
       <recent name="C:\Users\hp\PycharmProjects\datefix-1\Datefix\static\images" />
       <recent name="C:\Users\hp\PycharmProjects\datefix-1\Datefix\static" />
       <recent name="C:\Users\hp\PycharmProjects\datefix-1\Account\templates\Account" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\hp\PycharmProjects\datefix-1\services" />
+      <recent name="C:\Users\hp\PycharmProjects\datefix-1" />
+      <recent name="C:\Users\hp\PycharmProjects\datefix-1\Payment" />
+      <recent name="C:\Users\hp\PycharmProjects\datefix-1\Secret" />
     </key>
   </component>
   <component name="RestClientSettings">
@@ -351,7 +362,8 @@
       <workItem from="1600205836265" duration="12065000" />
       <workItem from="1603733229624" duration="13193000" />
       <workItem from="1603805298796" duration="620000" />
-      <workItem from="1603915716111" duration="2001000" />
+      <workItem from="1603915716111" duration="3736000" />
+      <workItem from="1604230169883" duration="15112000" />
     </task>
     <task id="LOCAL-00001" summary="Revert &quot;merge with louieee&quot;&#10;&#10;This reverts commit d2184739">
       <created>1597921264350</created>
@@ -441,14 +453,14 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="184" y="9" key="SettingsEditor/0.0.1366.728@0.0.1366.728" timestamp="1595665742997" />
-    <state x="275" y="97" key="Vcs.Push.Dialog.v2" timestamp="1603918926898">
+    <state x="275" y="97" key="Vcs.Push.Dialog.v2" timestamp="1603922857839">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="275" y="97" key="Vcs.Push.Dialog.v2/0.0.1366.728@0.0.1366.728" timestamp="1603918926898" />
-    <state x="0" y="0" width="585" height="728" key="find.popup" timestamp="1600209418176">
+    <state x="275" y="97" key="Vcs.Push.Dialog.v2/0.0.1366.728@0.0.1366.728" timestamp="1603922857839" />
+    <state x="0" y="0" width="585" height="728" key="find.popup" timestamp="1604232716503">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="0" y="0" width="585" height="728" key="find.popup/0.0.1366.728@0.0.1366.728" timestamp="1600209418176" />
+    <state x="0" y="0" width="585" height="728" key="find.popup/0.0.1366.728@0.0.1366.728" timestamp="1604232716503" />
     <state x="463" y="77" key="git4idea.branch.GitSmartOperationDialog" timestamp="1598116299379">
       <screen x="0" y="0" width="1366" height="728" />
     </state>

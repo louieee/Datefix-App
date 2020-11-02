@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_inlinecss'
 ]
 
 MIDDLEWARE = [
@@ -92,33 +93,26 @@ ASGI_APPLICATION = 'Datefix.routing.application'
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "NAME": config('DB_NAME'),
-        "USER": config('DB_USER'),
-        "PASSWORD": config('DB_PASSWORD'),
-        "HOST": config('DB_HOST'),
-        "PORT": config('DB_PORT'),
-        "OPTIONS": {
-            "sslmode": "verify-ca",
-            "sslrootcert": os.path.join(BASE_DIR, "rds-combined-ca-bundle.pem")
-        }
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_BACKEND = 'sendgrid_backend.SendgridBackend'
 
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
+SENDGRID_API_KEY = config('SENDGRID_API_KEY')
+
+SENDGRID_SANDBOX_MODE_IN_DEBUG = False
 
 EMAIL_HOST = 'smtp.sendgrid.net'
 
-EMAIL_USE_TLS = False
+EMAIL_USE_TLS = True
 
-EMAIL_USE_SSL = True
+EMAIL_PORT = 587
 
-EMAIL_PORT = 465
-
-EMAIL_HOST_USER = 'Louisane'
+EMAIL_HOST_USER = 'apikey'
 
 EMAIL_HOST_PASSWORD = config('SENDGRID_API_KEY')
 
