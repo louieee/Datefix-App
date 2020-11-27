@@ -1,5 +1,5 @@
 import os
-
+from django.core.validators import validate_email
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from Datefix import settings
@@ -24,6 +24,7 @@ class User(AbstractUser):
     status = models.CharField(max_length=64, default='Offline')
     can_be_matched = models.BooleanField(default=False)
     extra_support = models.BooleanField(default=False)
+    email = models.EmailField(unique=True, validators=[validate_email])
 
     def successful_list(self):
         if self.successful_matches == '[]':

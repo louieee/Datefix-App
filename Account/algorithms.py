@@ -574,7 +574,7 @@ def send_verification(request, user):
     :return:
     """
 	request.session['code'] = request.POST['csrfmiddlewaretoken']
-	link = f'http://{request.get_host()}/account/verify/?code={request.POST["csrfmiddlewaretoken"]}&email={request.POST["email"]}'
+	link = f'https://{request.get_host()}/account/verify/?code={request.POST["csrfmiddlewaretoken"]}&email={request.POST["email"]}'
 	request.session['verification_sent'] = True
 	send_email(user.first_name, 'Email Verification', 'We are excited to have you on Datefix', request.POST['email'],
 			   link, None)

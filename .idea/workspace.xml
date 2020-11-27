@@ -27,6 +27,13 @@
   <component name="ChangeListManager">
     <list default="true" id="9a953797-7a89-49b1-8b38-8033e02ea492" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Account/algorithms.py" beforeDir="false" afterPath="$PROJECT_DIR$/Account/algorithms.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Account/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/Account/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Account/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/Account/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Chat/algorithms.py" beforeDir="false" afterPath="$PROJECT_DIR$/Chat/algorithms.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Chat/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/Chat/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Datefix/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/Datefix/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/sendgrid_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/services/sendgrid_service.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -356,6 +363,14 @@
       <workItem from="1604230169883" duration="15112000" />
       <workItem from="1604322691570" duration="457000" />
       <workItem from="1604709119524" duration="766000" />
+      <workItem from="1605358971468" duration="12853000" />
+      <workItem from="1605463320527" duration="3417000" />
+      <workItem from="1605475510938" duration="2520000" />
+      <workItem from="1605677052492" duration="66000" />
+      <workItem from="1605758581991" duration="1525000" />
+      <workItem from="1605926378901" duration="262000" />
+      <workItem from="1606267951887" duration="999000" />
+      <workItem from="1606450066846" duration="53000" />
     </task>
     <task id="LOCAL-00001" summary="Revert &quot;merge with louieee&quot;&#10;&#10;This reverts commit d2184739">
       <created>1597921264350</created>
@@ -471,7 +486,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/Chat/models.py</url>
-          <line>87</line>
+          <line>93</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
       </breakpoints>

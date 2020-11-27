@@ -1,3 +1,5 @@
+import base64
+
 from django.db import models
 from Account.models import User
 from django.conf import settings
@@ -69,7 +71,11 @@ class ChatThread(models.Model):
                             f"({item.datetime.time().strftime('%I:%M %p')}): {msg}\n")
 
         text_file.close()
-        return text_file
+        return {
+            "content": base64.b64encode(text_file.read().encode()).decode(),
+            "type": "text/plain",
+            "filename": f'Chat_with_{other_user.username}.txt'
+        }
 
     def get_chat(self, user_position):
         list_ = {'first': self.first_deleted_(), 'second': self.second_deleted_()}

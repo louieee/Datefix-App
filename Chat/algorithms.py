@@ -87,9 +87,9 @@ def email_chat(chat_thread, user):
               f'is a text file of the chat between you and {other_user.username}.'
     from Account.algorithms import send_email
     send_email(user.username, f'Chat Text File Between You and {user.username}.', message, user.email,
-               None, [f'{user_chat.name}'])
+               None, [user_chat])
     import os
-    os.remove(f'{user_chat.name}')
+    os.remove(f"{user_chat['name']}")
 
 
 def reject(you, user):
