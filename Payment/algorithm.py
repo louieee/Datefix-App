@@ -5,7 +5,7 @@ def can_be_matched(user_id):
     from datetime import datetime
     user = User.objects.get(id=user_id)
     payment = Payment.objects.filter(payer_id=user.id).last()
-    if payment.expiry_date is None:
+    if payment is None:
         return False
     if payment.expiry_date < datetime.now().astimezone():
         payment.delete()

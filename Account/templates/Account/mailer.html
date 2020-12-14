@@ -1,29 +1,366 @@
 <!doctype html>
-<html lang="en">
-  <head>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
-  </head>
-  <body class="container">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand" href="https://datefix.net"><h3 class="text-danger">Date<span class="text-white">Fix</span></h3></a>
-</nav>
-    <div class="bg-light p-3">
-        <p class="h5">Dear {{ user }}, </p>
-        <p class="h5 text-justify">
-            {{ message}}
-        </p>
-        {% if link %}
-        <p class="text-center h4"><a href="{{ link }}" class="btn btn-info nomargin">
-            Click here to Proceed
-        </a></p>
-        <p class="text-center h4">or You can click this link below</p>
-        <p class="text-center h4"><a href="{{ link}}">{{ link }}</a></p>
-        {% endif %}
-        <p class="h4">Cheers!</p>
-        <p class="h4">From <span class="h4 text-danger">Date<span class="text-dark">Fix</span></span> Team.</p>
-    </div>
-    <div class="bg-secondary mx-0 p-2 mt-2 text-center">
-        <small class="text-white">If you dont have an account with us, please ignore. Thank you</small>
-    </div>
-  </body>
+
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<head>
+    <title>Datefix Email Template</title>
+
+    <style type="text/css">
+        .ReadMsgBody {
+            width: 100%;
+        }
+
+        .ExternalClass {
+            width: 100%;
+        }
+
+        .mobile {
+            display: none;
+            overflow: hidden;
+            visibility: hidden;
+        }
+
+        strong {
+            font-weight: bold;
+        }
+
+        @media only screen and (max-width: 479px) {
+            /**change to max-device-width after testing**/
+            td[class="desktop"], table[class="desktop"] {
+                display: none !important;
+            }
+
+            td[class="mobile_only"], table[class="mobile_only"], img[class="mobile_only"], div[class="mobile_only"], tr[class="mobile_only"] {
+                display: block !important;
+                width: auto !important;
+                overflow: visible !important;
+                height: auto !important;
+                max-height: inherit !important;
+                font-size: 15px !important;
+                line-height: 21px !important;
+                visibility: visible !important;
+            }
+
+            img[class="mobile_header"] {
+                width: 320px !important;
+                height: 243px !important;
+                display: block !important;
+                overflow: visible !important;
+                visibility: visible !important;
+            }
+
+            td[class="full_width"], table[class="full_width"] {
+                width: 320px !important;
+            }
+
+            td[class="medium_width"], table[class="medium_width"] {
+                width: 272px !important;
+            }
+
+            td[class="intro_text"], table[class="intro_text"] {
+                font-size: 14px !important;
+                line-height: 20px !important;
+            }
+
+        }
+    </style>
+
+</head>
+
+
+<body style="background: url(https://datefix.net/static/images/page/pfbgx.png);
+    background-attachment: fixed;
+    background-size: cover;
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+    width: 100% !important;
+    -webkit-text-size-adjust: none;" topmargin="0">
+<div style="font-size: 1px; color: #f5f5f5; display: none;"><!-- content preview --> </div>
+
+
+<!--wrapper table-->
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+        <td>
+
+            <table class="full_width" align="center" width="650" border="0" cellpadding="0" cellspacing="0"
+                   style="padding-top: 12px;">
+                <tr>
+                    <td><img alt="Datefix" src="https://datefix.net/static/images/logo-dark.png" width="220" height="75"
+                             border="0" hspace="0" vspace="0" style="display:block; vertical-align:top;"></td>
+                </tr>
+            </table>
+
+
+        </td>
+    </tr>
+</table>
+
+<!-- spacer -->
+
+<table align="center" width="100%" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+        <td height="12" style="font-size: 0px; line-height: 0px;">&nbsp;</td>
+    </tr>
+</table>
+
+
+<!-- wrapper table-->
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+        <td>&nbsp;</td>
+
+        <td class="full_width" width="650" align="center"
+            style="border-bottom:1px solid #d8d8d8; border-top:1px solid #ee438c;background-color: rgba(255,255,255,.8); padding-bottom: 30px;">
+
+
+            <!--spacer-->
+
+            <table align="center" width="100%" border="0" cellpadding="0" cellspacing="0">
+                <tr>
+                    <td height="24" style="font-size: 0px; line-height: 0px;">&nbsp;</td>
+                </tr>
+            </table>
+
+            <!-- headline -->
+
+            <table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" style="padding-top: 12px;">
+                <tr>
+                    <td class="desktop"
+                        style="color:#333333; font-family: Helvetica, sans-serif;text-align:left; font-size:24px; line-height:20px; padding-bottom:18px;text-align:center;">
+                        Datefix {{ subject }}
+                    </td>
+                </tr>
+            </table>
+
+            <!-- message -->
+
+
+            <table class="medium_width" align="center" width="380" border="0" cellpadding="0" cellspacing="0">
+                <tr>
+                    <td style="color:#333333; font-family: Helvetica, sans-serif;text-align:left; font-size:14px; line-height:20px; padding-bottom:18px;text-align:center;">
+                        Dear {{ user }}, <br>{{ message }} <br><br>
+                        {% if link %}
+                            <a target="_blank" href={{ link }}>Click
+                            here to proceed</a><br><br>
+                            or you can copy and paste the link below in your browser<br><br>
+                            {{ link }}
+                        {% endif %}
+                        <br><br>
+                        Cheers!<br>
+                        Datefix Team
+                    </td>
+                </tr>
+            </table>
+
+            <table class="medium_width" align="center" width="380" border="0" cellpadding="0" cellspacing="0">
+                <tr>
+                    <td style="color:#333333; font-family: Helvetica, sans-serif;text-align:left; font-size:11px; line-height:20px; padding-bottom:18px;text-align:center;">
+                        If you did not register on Datefix, please ignore this message.
+                    </td>
+                </tr>
+            </table>
+
+            <!--spacer-->
+
+
+            <table align="center" width="100%" border="0" cellpadding="0" cellspacing="0">
+                <tr>
+                    <td height="24" style="font-size: 0px; line-height: 0px;">&nbsp;</td>
+                </tr>
+            </table>
+
+
+            <!--spacer-->
+
+            <table align="center" width="100%" border="0" cellpadding="0" cellspacing="0">
+                <tr>
+                    <td height="24" style="font-size: 0px; line-height: 0px;">&nbsp;</td>
+                </tr>
+            </table>
+
+
+            <!-- main content - three columns desktop layout-->
+
+            <table class="desktop" align="center" width="100%" border="0" cellpadding="0" cellspacing="0">
+                <tr>
+                    <td width="67">&nbsp;</td>
+                    <td valign="top">
+                        <table align="center" width="152" border="0" cellpadding="0" cellspacing="0">
+                            <tr>
+                                <td class="desktop" valign="top">
+                                    <a href="#" target="_blank"><img alt="Image1"
+                                                                     src="http://datefix.net/static/images/page/bg1.jpg"
+                                                                     width="147" height="83" border="0" hspace="0"
+                                                                     vspace="0"
+                                                                     style="display:block; vertical-align:top;"></a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td valign="top"
+                                    style="color:#333333; font-family: Helvetica, sans-serif;text-align:left; font-size:13px; line-height:17px; padding-top:12px;padding-bottom:18px;">
+                                    <strong><span style="color: #ff6600">NEW</span> Private & Secure</strong><br/>
+                                    <div style="color:#333333; font-family: Helvetica, sans-serif;text-align:left; font-size:13px; line-height:17px;">
+                                        Your information is hidden and secure, we practice maximum discreetness. You can
+                                        only share your information at the end of a successful Datefix Session.
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td width="30">&nbsp;</td>
+                    <td valign="top">
+                        <table align="center" width="152" border="0" cellpadding="0" cellspacing="0">
+                            <tr>
+                                <td valign="top">
+                                    <a href="#" target="_blank"><img alt="Image2"
+                                                                     src="http://datefix.net/static/images/page/tile2.jpg"
+                                                                     width="147" height="83" border="0" hspace="0"
+                                                                     vspace="0"
+                                                                     style="display:block; vertical-align:top;"></a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td valign="top"
+                                    style="color:#333333; font-family: Helvetica, sans-serif;text-align:left; font-size:13px; line-height:17px; padding-top:12px;padding-bottom:18px;">
+                                    <strong>Intelligent Matchmaking.</strong><br/>
+                                    <div style="color:#333333; font-family: Helvetica, sans-serif;text-align:left; font-size:13px; line-height:17px;">
+                                        Our matchmaking algorithm is tuned to deliver the most relevant and active
+                                        prospects based on your mutual preferences.
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td width="30">&nbsp;</td>
+                    <td valign="top">
+                        <table align="center" width="152" border="0" cellpadding="0" cellspacing="0">
+                            <tr>
+                                <td class="desktop" valign="top">
+                                    <a href="#" target="_blank"><img alt="Image3"
+                                                                     src="http://datefix.net/static/images/page/tile4.jpg"
+                                                                     width="147" height="83" border="0" hspace="0"
+                                                                     vspace="0"
+                                                                     style="display:block; vertical-align:top;"></a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td valign="top"
+                                    style="color:#333333; font-family: Helvetica, sans-serif;text-align:left; font-size:13px; line-height:17px; padding-top:12px;padding-bottom:18px;">
+                                    <strong>Eligible Nigerian Singles</strong><br/>
+                                    <div style="color:#333333; font-family: Helvetica, sans-serif;text-align:left; font-size:13px; line-height:17px;">
+                                        Datefix is only for those who want a serious relationship. Over 90% of our
+                                        members are 25+ and hold an above-average education.
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td width="67">&nbsp;</td>
+                </tr>
+            </table>
+
+            <!--/three columns web layout -->
+
+
+            <!-- main content three rows mobile layout-->
+            <div class="mobile_only" style="width:0;max-height:0;overflow:hidden;float:left;display:none;">
+                <table class="mobile_only" align="center" width="100%" height="0" border="0" cellpadding="0"
+                       cellspacing="0" style="overflow:hidden;display:none;visibility:hidden;width:0;max-height:0;">
+                    <tr class="mobile_only" style="overflow:hidden;visibility:hidden;width:0;max-height:0;">
+                        <td width="30">&nbsp;</td>
+                        <td class="mobile_only" valign="top"
+                            style="color:#333333; font-family: Helvetica, sans-serif;text-align:left;font-size:1px;line-height:1px;overflow:hidden;height:0px;visibility:hidden;width:0;max-height:0;padding-left: 12px; padding-right: 12px; padding-bottom: 0px;padding-top: 0px;">
+                            <div class="mobile_only"
+                                 style="overflow:hidden;height:0px;font-size:1px;line-height:1px;visibility:hidden;width:0;max-height:0;">
+                                <strong><span style="color: #ff6600">NEW</span> Private & Secure</strong><br/>
+                                Your information is hidden and secure, we practice maximum discreetness. You can only
+                                share your information at the end of a successful Datefix Session.<br/><br/></div>
+                        </td>
+                        <td width="30">&nbsp;</td>
+                    </tr>
+                </table>
+                <table class="mobile_only" align="center" width="100%" height="0" border="0" cellpadding="0"
+                       cellspacing="0" style="overflow:hidden;display:none;visibility:hidden;width:0;max-height:0;">
+                    <tr class="mobile_only" style="overflow:hidden;visibility:hidden;width:0;max-height:0;">
+                        <td width="30">&nbsp;</td>
+                        <td class="mobile_only" valign="top"
+                            style="color:#333333; font-family: Helvetica, sans-serif;text-align:left;font-size:1px;line-height:1px;overflow:hidden;height:0px;visibility:hidden;width:0;max-height:0;padding-left: 12px; padding-right: 12px; padding-bottom: 0px;padding-top: 0px;">
+                            <div class="mobile_only"
+                                 style="overflow:hidden;height:0px;font-size:1px;line-height:1px;visibility:hidden;width:0;max-height:0;">
+                                <strong>Intelligent Matchmaking.</strong><br/>
+                                Our matchmaking algorithm is tuned to deliver the most relevant and active prospects
+                                based on your mutual preferences.<br/><br/></div>
+                        </td>
+                        <td width="30">&nbsp;</td>
+                    </tr>
+                </table>
+
+                <table class="mobile_only" align="center" width="100%" height="0" border="0" cellpadding="0"
+                       cellspacing="0" style="overflow:hidden;display:none;visibility:hidden;width:0;max-height:0;">
+                    <tr class="mobile_only" style="overflow:hidden;visibility:hidden;width:0;max-height:0;">
+                        <td width="30">&nbsp;</td>
+                        <td class="mobile_only" valign="top"
+                            style="color:#333333; font-family: Helvetica, sans-serif;text-align:left;font-size:1px;line-height:1px;overflow:hidden;height:0px;visibility:hidden;width:0;max-height:0;padding-left: 12px; padding-right: 12px; padding-bottom: 0px;padding-top: 0px;">
+                            <div class="mobile_only"
+                                 style="overflow:hidden;height:0px;font-size:1px;line-height:1px;visibility:hidden;width:0;max-height:0;">
+                                <strong>Eligible Nigerian SSingles.</strong><br/>
+                                Datefix is only for those who want a serious relationship. Over 90% of our members are
+                                25+ and hold an above-average education.<br/><br/></div>
+                        </td>
+                        <td width="30">&nbsp;</td>
+                    </tr>
+                </table>
+            </div>
+            <!-- /three rows mobile layout-->
+
+
+            <!-- bottom column-->
+
+            <table class="medium_width" align="center" width="100%" border="0" cellpadding="0" cellspacing="0">
+                <tr>
+                    <td class="desktop" width="67" style="padding-top:18px;">&nbsp;</td>
+                    <td style="border-top: 1px solid #d9d9d9; color:#333333; font-family: Helvetica, sans-serif;text-align:left; font-size:14px; line-height:20px; padding-top:18px; padding-bottom:18px;">
+                        <strong>For the working professional.</strong><br>
+                        Here at DateFix, we understand that the demands of modern life leaves close to no room for
+                        socialization in the life of a Nigerian Professional and so we aim to bridge this societal gap
+                        by bringing like-minded compatible singles to your niche.<br>
+                    </td>
+                    <td class="desktop" width="34" style="border-top: 1px solid #d9d9d9;padding-top:18px;">&nbsp;</td>
+                    <td class="desktop" style="border-top: 1px solid #d9d9d9; padding-top:18px; padding-bottom:18px;">
+                        <img alt="Image4" src="https://datefix.net/static/images/page/pro1.jpg" width="147" height="83"
+                             border="0" hspace="0" vspace="0"
+                             style="display:block; vertical-align:top; height:auto!important;"></td>
+                    <td class="desktop" width="67" style="padding-top:18px;">&nbsp;</td>
+                </tr>
+            </table>
+            <table class="medium_width" align="center" width="380" border="0" cellpadding="0" cellspacing="0">
+                <tr>
+                    <td style="color:#333333; font-family: Helvetica, sans-serif;text-align:left; font-size:11px; line-height:20px; padding-bottom:18px;text-align:center;">
+                        To unsubscribe,  <a href="#">Click here</a>.
+                    </td>
+                </tr>
+            </table>
+
+        </td>
+        <td>&nbsp;</td>
+    </tr>
+</table> <!--/end wrapper-->
+
+
+<!-- legal disclaimer -->
+
+<table class="full_width" bgcolor="#f5f5f5" align="center" width="650" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+        <td class="desktop" width="22">&nbsp;</td>
+        <td align="center"
+            style="color:#a1a1a1; font-family: Helvetica, sans-serif;text-align:left; font-size:11px; line-height:13px; text-align:left; padding-top:20px; padding-bottom:40px;">
+            Datefix.net
+        </td>
+        <td class="desktop" width="22">&nbsp;</td>
+    </tr>
+</table>
+
+</body>
 </html>

@@ -20,20 +20,22 @@
       <path>
         <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
         <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
-        <item name="BRANCH:master_" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="BRANCH:aws_master" type="e8cecc67:BranchNodeDescriptor" />
       </path>
     </select>
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9a953797-7a89-49b1-8b38-8033e02ea492" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/aws.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/aws.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Account/algorithms.py" beforeDir="false" afterPath="$PROJECT_DIR$/Account/algorithms.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Account/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/Account/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Account/templates/Account/mailer.html" beforeDir="false" afterPath="$PROJECT_DIR$/Account/templates/Account/mailer.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Account/templates/Account/verification-link-sent.html" beforeDir="false" afterPath="$PROJECT_DIR$/Account/templates/Account/verification-link-sent.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Account/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/Account/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Chat/algorithms.py" beforeDir="false" afterPath="$PROJECT_DIR$/Chat/algorithms.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Chat/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/Chat/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Datefix/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/Datefix/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Datefix/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/Datefix/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/services/sendgrid_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/services/sendgrid_service.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/registration/password_reset_done.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/registration/password_reset_done.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,7 +58,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="development" />
+        <entry key="$PROJECT_DIR$" value="master_" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -371,6 +373,8 @@
       <workItem from="1605926378901" duration="262000" />
       <workItem from="1606267951887" duration="999000" />
       <workItem from="1606450066846" duration="53000" />
+      <workItem from="1606949916385" duration="8934000" />
+      <workItem from="1607813139044" duration="6415000" />
     </task>
     <task id="LOCAL-00001" summary="Revert &quot;merge with louieee&quot;&#10;&#10;This reverts commit d2184739">
       <created>1597921264350</created>
@@ -406,7 +410,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="master_" />
+                        <option value="aws_master" />
                       </list>
                     </value>
                   </entry>
@@ -424,22 +428,14 @@
     <option name="LAST_COMMIT_MESSAGE" value="Revert &quot;merge with louieee&quot;&#10;&#10;This reverts commit d2184739" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="275" y="22" key="#Deployment" timestamp="1597493178954">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state x="275" y="22" key="#Deployment/0.0.1366.728@0.0.1366.728" timestamp="1597493178954" />
-    <state x="360" y="58" key="#Options" timestamp="1597493231445">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state x="360" y="58" key="#Options/0.0.1366.728@0.0.1366.728" timestamp="1597493231445" />
     <state x="278" y="0" key="CommitChangelistDialog2" timestamp="1597921262849">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="278" y="0" key="CommitChangelistDialog2/0.0.1366.728@0.0.1366.728" timestamp="1597921262849" />
-    <state x="92" y="92" width="1182" height="544" maximized="true" key="DiffContextDialog" timestamp="1603761755127">
+    <state x="92" y="92" width="1182" height="544" maximized="true" key="DiffContextDialog" timestamp="1606483647882">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="92" y="92" width="1182" height="544" maximized="true" key="DiffContextDialog/0.0.1366.728@0.0.1366.728" timestamp="1603761755127" />
+    <state x="92" y="92" width="1182" height="544" maximized="true" key="DiffContextDialog/0.0.1366.728@0.0.1366.728" timestamp="1606483647882" />
     <state x="462" y="119" key="FileChooserDialogImpl" timestamp="1598353630002">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
@@ -456,14 +452,10 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="21" y="29" width="1229" height="647" key="MultipleFileMergeDialog/0.0.1366.728@0.0.1366.728" timestamp="1597921245689" />
-    <state x="184" y="9" key="SettingsEditor" timestamp="1595665742997">
+    <state x="275" y="97" key="Vcs.Push.Dialog.v2" timestamp="1606483177846">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="184" y="9" key="SettingsEditor/0.0.1366.728@0.0.1366.728" timestamp="1595665742997" />
-    <state x="275" y="97" key="Vcs.Push.Dialog.v2" timestamp="1603922857839">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state x="275" y="97" key="Vcs.Push.Dialog.v2/0.0.1366.728@0.0.1366.728" timestamp="1603922857839" />
+    <state x="275" y="97" key="Vcs.Push.Dialog.v2/0.0.1366.728@0.0.1366.728" timestamp="1606483177846" />
     <state x="0" y="0" width="585" height="728" key="find.popup" timestamp="1604232716503">
       <screen x="0" y="0" width="1366" height="728" />
     </state>

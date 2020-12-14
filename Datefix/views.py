@@ -1,11 +1,9 @@
-import json
-
-from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth.tokens import default_token_generator
 
 from Account.algorithms import flash, display, send_email
 from Account.models import User
+from Chat.algorithms import purify_email
 
 
 def home(request):
@@ -30,6 +28,7 @@ def password_reset(request):
 
     if request.method == 'POST':
         email = request.POST['email']
+        email = purify_email(email)
         try:
             user = User.objects.get(email=email)
             token_gen = default_token_generator

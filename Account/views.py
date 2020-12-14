@@ -6,7 +6,7 @@ from django.views.decorators.csrf import csrf_exempt
 from .models import User, PersonalityTest, Couple
 import json
 from .algorithms import match_user, flash, display, send_verification, get_username, get_personality, get_score
-from Chat.algorithms import create_chat
+from Chat.algorithms import create_chat, purify_email
 
 
 # Create your views here.
@@ -17,7 +17,8 @@ def login(request):
 		if not request.POST.get('email', False) or not request.POST.get('password', False):
 			flash(request, 'No login details was entered !', 'danger', 'remove-sign')
 			return redirect('login')
-		email = str(request.POST['email']).lower()
+		email = request.POST['email']
+		email = purify_email(email)
 		try:
 			user = User.objects.get(email=email)
 
@@ -71,16 +72,18 @@ def personality(request):
 	if request.method == 'GET':
 		user = None
 		score = int(request.GET['score'])
+		email = request.GET.get('email', False)
+		email = purify_email(email)
 		if 'email' not in request.session:
-			request.session['email'] = request.GET['email']
+			request.session['email'] = email
 		test_ = PersonalityTest()
 		try:
-			test_ = PersonalityTest.objects.get(email=request.GET['email'])
+			test_ = PersonalityTest.objects.get(email=email)
 		except PersonalityTest.DoesNotExist:
-			test_.email = request.GET['email']
+			test_.email = email
 
 		if request.user.is_authenticated and 'is_user' not in request.session:
-			if request.user.email == request.GET['email']:
+			if request.user.email == email:
 				user = User.objects.get(id=request.user.id)
 				request.session['is_user'] = True
 
@@ -193,12 +196,11 @@ def signup(request):
 				'first-name', False):
 			flash(request, 'Some Fields are empty !', 'danger', 'remove-sign')
 			return redirect('login')
-		email = str(request.POST['email']).lower()
+		email = purify_email(str(request.POST['email']))
 		user = User.objects.filter(email=email).first()
 		if user is not None:
 			flash(request, 'This email already exists !', 'danger', 'remove-sign')
 			return redirect('login')
-		from Datefix.algorithms import get_key
 		username = get_username()
 		user = User.objects.create_user(
 			username=username,
@@ -309,7 +311,7 @@ def verified(request):
 # verify function is verified
 def verify(request):
 	if request.method == 'POST':
-		flash(request, 'Invalid Request !', 'danger')
+		flash(request, 'Invalid Request !', 'danger', 'remove-sign')
 		return redirect('login')
 
 	if 'code' not in request.session:
@@ -320,7 +322,7 @@ def verify(request):
 
 	del request.session['code']
 	request.session['verified'] = True
-	request.session['email'] = request.GET['email']
+	request.session['email'] = purify_email(request.GET['email'])
 	return redirect('verified')
 
 

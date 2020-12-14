@@ -108,23 +108,24 @@ DATABASES = {
 }
 
 
-EMAIL_BACKEND = 'sendgrid_backend.SendgridBackend'
+#EMAIL_BACKEND = 'sendgrid_backend.SendgridBackend'
 
-# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django_ses.SESBackend'
+
 
 SENDGRID_API_KEY = config('SENDGRID_API_KEY')
 
 SENDGRID_SANDBOX_MODE_IN_DEBUG = False
 
-EMAIL_HOST = 'smtp.sendgrid.net'
+EMAIL_HOST = 'email-smtp.us-east-2.amazonaws.com'
 
 EMAIL_USE_TLS = True
 
-EMAIL_PORT = 587
+EMAIL_PORT = 25
 
-EMAIL_HOST_USER = 'apikey'
+EMAIL_HOST_USER = 'AKIASQGZYZ3O57RIX6FK'
 
-EMAIL_HOST_PASSWORD = config('SENDGRID_API_KEY')
+EMAIL_HOST_PASSWORD = 'BNR6sy3xAe6Y2MoIGuiOegweq8DWbB/Vo3S9oXanWfqU'
 
 DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL')
 
