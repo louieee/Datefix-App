@@ -38,7 +38,7 @@ class RavePayServices:
 		data = {"tx_ref": tx_ref, "amount": self.package_price(self.data['package'], self.data['duration']),
 				"currency": "NGN",
 				"redirect_url": f"{config('RAVE_PAY_REDIRECT_URL')}/{user.id}/{self.data['package']}/{self.data['duration']}/{tx_ref}",
-				"payment_options": self.data['payment_option'],
+				"payment_options": "account, card, banktransfer, ussd",
 				"customer": {
 					"id": user.id, "email": user.email, "name": f"{user.first_name} {user.last_name}",
 					"package": self.data['package'],

@@ -24,61 +24,61 @@ SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-ALLOWED_HOSTS = ['datefix.net', 'www.datefix.net']
+ALLOWED_HOSTS = ['datefix.net', 'www.datefix.net', '127.0.0.1', 'localhost']
 # Application definition
 
 INSTALLED_APPS = [
-    'channels',
-    'Account',
-    'Chat',
-    'Payment',
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
+	'channels',
+	'Account',
+	'Chat',
+	'Payment',
+	'django.contrib.admin',
+	'django.contrib.auth',
+	'django.contrib.contenttypes',
+	'django.contrib.sessions',
+	'django.contrib.messages',
+	'django.contrib.staticfiles',
 ]
 
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+	'django.middleware.security.SecurityMiddleware',
+	'django.middleware.common.CommonMiddleware',
+	'whitenoise.middleware.WhiteNoiseMiddleware',
+	'django.contrib.sessions.middleware.SessionMiddleware',
+	'django.middleware.csrf.CsrfViewMiddleware',
+	'django.contrib.auth.middleware.AuthenticationMiddleware',
+	'django.contrib.messages.middleware.MessageMiddleware',
+	'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-#SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-#SECURE_SSL_REDIRECT = True
+# SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+# SECURE_SSL_REDIRECT = True
 
 ROOT_URLCONF = 'Datefix.urls'
 
 TEMPLATES = [
-    {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
-            ],
-        },
-    },
+	{
+		'BACKEND': 'django.template.backends.django.DjangoTemplates',
+		'DIRS': [os.path.join(BASE_DIR, 'templates')],
+		'APP_DIRS': True,
+		'OPTIONS': {
+			'context_processors': [
+				'django.template.context_processors.debug',
+				'django.template.context_processors.request',
+				'django.contrib.auth.context_processors.auth',
+				'django.contrib.messages.context_processors.messages',
+			],
+		},
+	},
 ]
 
 CHANNEL_LAYERS = {"default": {
-    "BACKEND": "channels_redis.core.RedisChannelLayer",
-    "CONFIG": {
-        "hosts": [os.environ.get('REDIS_URL', 'redis://redis:6379')],
-        # "hosts": [('localhost', 6379)],
+	"BACKEND": "channels_redis.core.RedisChannelLayer",
+	"CONFIG": {
+		"hosts": [os.environ.get('REDIS_URL', 'redis://redis:6379')],
+		# "hosts": [('localhost', 6379)],
 
-    }
+	}
 
 }
 }
@@ -89,29 +89,27 @@ ASGI_APPLICATION = 'Datefix.routing.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 DATABASES = {
-    # "default": {
-    #     "ENGINE": "django.db.backends.postgresql_psycopg2",
-    #     "NAME": config('DB_NAME'),
-    #     "USER": config('DB_USER'),
-    #     "PASSWORD": config('DB_PASSWORD'),
-    #     "HOST": config('DB_HOST'),
-    #     "PORT": config('DB_PORT'),
-    #     "OPTIONS": {
-    #         "sslmode": "verify-ca",
-    #         "sslrootcert": os.path.join(BASE_DIR, "rds-combined-ca-bundle.pem")
-    #     }
-    # }
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
+	# "default": {
+	#     "ENGINE": "django.db.backends.postgresql_psycopg2",
+	#     "NAME": config('DB_NAME'),
+	#     "USER": config('DB_USER'),
+	#     "PASSWORD": config('DB_PASSWORD'),
+	#     "HOST": config('DB_HOST'),
+	#     "PORT": config('DB_PORT'),
+	#     "OPTIONS": {
+	#         "sslmode": "verify-ca",
+	#         "sslrootcert": os.path.join(BASE_DIR, "rds-combined-ca-bundle.pem")
+	#     }
+	# }
+	'default': {
+		'ENGINE': 'django.db.backends.sqlite3',
+		'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+	}
 }
 
-
-#EMAIL_BACKEND = 'sendgrid_backend.SendgridBackend'
+# EMAIL_BACKEND = 'sendgrid_backend.SendgridBackend'
 
 EMAIL_BACKEND = 'django_ses.SESBackend'
-
 
 SENDGRID_API_KEY = config('SENDGRID_API_KEY')
 
@@ -133,18 +131,18 @@ DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL')
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
+	{
+		'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+	},
+	{
+		'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+	},
+	{
+		'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+	},
+	{
+		'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+	},
 ]
 
 # Internationalization
@@ -174,19 +172,81 @@ LOGOUT_REDIRECT_URL = '/'
 AUTH_USER_MODEL = "Account.User"
 
 AUTHENTICATION_BACKENDS = [
-    'django.contrib.auth.backends.ModelBackend',
-    'Account.customAuth.EmailAuthBackend'
+	'django.contrib.auth.backends.ModelBackend',
+	'Account.customAuth.EmailAuthBackend'
 ]
 
-import dj_database_url
+LOGGING = {
+	'version': 1,
+	'disable_existing_loggers': False,
+	'formatters': {
+		'verbose': {
+			'format': '{levelname} {asctime} {module} {process:d} {thread:d} {message}',
+			'style': '{',
+		},
+		'simple': {
+			'format': '{levelname} {message}',
+			'style': '{',
+		},
+	},
+	'filters': {
+		'require_debug_false': {
+			'()': 'django.utils.log.RequireDebugFalse',
+		},
+		'require_debug_true': {
+			'()': 'django.utils.log.RequireDebugTrue',
+		},
+	},
+	'handlers': {
+		'file': {
+			'level': 'ERROR',
+			'class': 'logging.FileHandler',
+			'filename': f'{BASE_DIR}/error.log',
+		},
+		'console': {
+			'level': 'INFO',
+			'filters': ['require_debug_true'],
+			'class': 'logging.StreamHandler',
+			'formatter': 'simple',
+		},
+		'mail_admins': {
+			'level': 'ERROR',
+			'filters': ['require_debug_false'],
+			'class': 'django.utils.log.AdminEmailHandler',
+			'formatter': 'verbose',
+		},
+	},
+	'loggers': {
+		'django': {
+			'handlers': ['file', 'console'],
+			'level': 'ERROR',
+			'propagate': False,
+		},
+		'django.request': {
+			'handlers': ['mail_admins', 'file'],
+			'level': 'ERROR',
+			'propagate': False,
+		},
+		'django.security': {
+			'handlers': ['mail_admins', 'file'],
+			'level': 'ERROR',
+			'propagate': False,
+		},
+		'py.warnings': {
+			'handlers': ['console', 'mail_admins', 'file'],
+			'propagate': False
+		},
+	},
+}
 
+import dj_database_url
 
 prod_db = dj_database_url.config()
 DATABASES['default'].update(prod_db)
 
 # STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARED_PROTO', 'https')
-SECURE_SSL_REDIRECT = True
-SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_SECURE = True
+# SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARED_PROTO', 'https')
+# SECURE_SSL_REDIRECT = True
+# SESSION_COOKIE_SECURE = True
+# CSRF_COOKIE_SECURE = True

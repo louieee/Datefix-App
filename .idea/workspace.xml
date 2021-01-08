@@ -26,16 +26,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9a953797-7a89-49b1-8b38-8033e02ea492" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/aws.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/aws.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Account/templates/Account/mailer.html" beforeDir="false" afterPath="$PROJECT_DIR$/Account/templates/Account/mailer.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Account/templates/Account/verification-link-sent.html" beforeDir="false" afterPath="$PROJECT_DIR$/Account/templates/Account/verification-link-sent.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Account/templates/Account/results.html" beforeDir="false" afterPath="$PROJECT_DIR$/Account/templates/Account/results.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Account/templates/Account/results_m.html" beforeDir="false" afterPath="$PROJECT_DIR$/Account/templates/Account/results_m.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Account/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/Account/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Chat/algorithms.py" beforeDir="false" afterPath="$PROJECT_DIR$/Chat/algorithms.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Datefix/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/Datefix/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Datefix/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/Datefix/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/sendgrid_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/services/sendgrid_service.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/registration/password_reset_done.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/registration/password_reset_done.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Payment/algorithm.py" beforeDir="false" afterPath="$PROJECT_DIR$/Payment/algorithm.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Payment/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/Payment/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Payment/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/Payment/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/ravepay_services.py" beforeDir="false" afterPath="$PROJECT_DIR$/services/ravepay_services.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -375,6 +374,19 @@
       <workItem from="1606450066846" duration="53000" />
       <workItem from="1606949916385" duration="8934000" />
       <workItem from="1607813139044" duration="6415000" />
+      <workItem from="1607984091468" duration="4221000" />
+      <workItem from="1608085315756" duration="5202000" />
+      <workItem from="1608306585249" duration="3258000" />
+      <workItem from="1608324215149" duration="2007000" />
+      <workItem from="1608469888325" duration="151000" />
+      <workItem from="1608657959713" duration="4051000" />
+      <workItem from="1608739141846" duration="3576000" />
+      <workItem from="1608772710419" duration="643000" />
+      <workItem from="1609088025973" duration="2184000" />
+      <workItem from="1609343731395" duration="450000" />
+      <workItem from="1609718570705" duration="567000" />
+      <workItem from="1609867196846" duration="6800000" />
+      <workItem from="1609947075822" duration="6685000" />
     </task>
     <task id="LOCAL-00001" summary="Revert &quot;merge with louieee&quot;&#10;&#10;This reverts commit d2184739">
       <created>1597921264350</created>
@@ -428,50 +440,18 @@
     <option name="LAST_COMMIT_MESSAGE" value="Revert &quot;merge with louieee&quot;&#10;&#10;This reverts commit d2184739" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="278" y="0" key="CommitChangelistDialog2" timestamp="1597921262849">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state x="278" y="0" key="CommitChangelistDialog2/0.0.1366.728@0.0.1366.728" timestamp="1597921262849" />
     <state x="92" y="92" width="1182" height="544" maximized="true" key="DiffContextDialog" timestamp="1606483647882">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="92" y="92" width="1182" height="544" maximized="true" key="DiffContextDialog/0.0.1366.728@0.0.1366.728" timestamp="1606483647882" />
-    <state x="462" y="119" key="FileChooserDialogImpl" timestamp="1598353630002">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state x="462" y="119" key="FileChooserDialogImpl/0.0.1366.728@0.0.1366.728" timestamp="1598353630002" />
-    <state x="469" y="231" key="Github.CreatePullRequestDialog" timestamp="1600219490128">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state x="469" y="231" key="Github.CreatePullRequestDialog/0.0.1366.728@0.0.1366.728" timestamp="1600219490128" />
-    <state x="81" y="43" key="MergeDialog" timestamp="1598115874089">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state x="81" y="43" key="MergeDialog/0.0.1366.728@0.0.1366.728" timestamp="1598115874089" />
-    <state x="21" y="29" width="1229" height="647" key="MultipleFileMergeDialog" timestamp="1597921245689">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state x="21" y="29" width="1229" height="647" key="MultipleFileMergeDialog/0.0.1366.728@0.0.1366.728" timestamp="1597921245689" />
     <state x="275" y="97" key="Vcs.Push.Dialog.v2" timestamp="1606483177846">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="275" y="97" key="Vcs.Push.Dialog.v2/0.0.1366.728@0.0.1366.728" timestamp="1606483177846" />
-    <state x="0" y="0" width="585" height="728" key="find.popup" timestamp="1604232716503">
+    <state x="0" y="0" width="585" height="728" key="find.popup" timestamp="1610071219685">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="0" y="0" width="585" height="728" key="find.popup/0.0.1366.728@0.0.1366.728" timestamp="1604232716503" />
-    <state x="463" y="77" key="git4idea.branch.GitSmartOperationDialog" timestamp="1598116299379">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state x="463" y="77" key="git4idea.branch.GitSmartOperationDialog/0.0.1366.728@0.0.1366.728" timestamp="1598116299379" />
-    <state x="480" y="152" key="git4idea.merge.GitMergeDialog" timestamp="1598116558504">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state x="480" y="152" key="git4idea.merge.GitMergeDialog/0.0.1366.728@0.0.1366.728" timestamp="1598116558504" />
-    <state x="346" y="49" width="672" height="678" key="search.everywhere.popup" timestamp="1600214484286">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state x="346" y="49" width="672" height="678" key="search.everywhere.popup/0.0.1366.728@0.0.1366.728" timestamp="1600214484286" />
+    <state x="0" y="0" width="585" height="728" key="find.popup/0.0.1366.728@0.0.1366.728" timestamp="1610071219685" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

@@ -53,7 +53,7 @@ def login(request):
 		return render(request, 'Account/login.html', {'message': flash_[0], 'status': flash_[1], "icon": flash_[2]})
 
 
-@login_required
+@login_required(login_url='login')
 def logout(request):
 	user = User.objects.get(id=request.user.id)
 	from datetime import datetime
@@ -256,7 +256,7 @@ def dashboard(request):
 				user_details['registered'] = True
 				return render(request, 'Account/profile.html', user_details)
 
-			return redirect('home')
+			return redirect('pay')
 
 
 # verified
@@ -333,8 +333,9 @@ def not_found(request):
 
 # verified
 def verification(request):
-	return render(request, 'Account/verification-link-sent.html', {"email": request.session['email']})
-
+	if 'email' in request.session:
+		return render(request, 'Account/verification-link-sent.html', {"email": request.session['email']})
+	return redirect('login')
 
 # verified
 def personality_test(request):
@@ -401,7 +402,7 @@ def test_result(request):
 
 
 @csrf_exempt
-@login_required
+@login_required(login_url='login')
 def decrypt(request):
 	if request.method == 'POST':
 		user = User.objects.get(id=request.user.id)
@@ -411,7 +412,7 @@ def decrypt(request):
 
 
 @csrf_exempt
-@login_required
+@login_required(login_url='login')
 def encrypt(request):
 	if request.method == 'POST':
 		user = User.objects.get(id=request.user.id)
