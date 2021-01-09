@@ -34,7 +34,7 @@ var app = new Vue({
     this.id = this.$refs.userID.value;
     await this.getUser();
     await this.getAllChats();
-    const url = window.location.href.replace("http", "ws");
+    const url = get_url();
     this.socket = new WebSocket(url);
     await this.websocket();
     this.modalStatic();
@@ -296,7 +296,15 @@ function scroll(){
   }
 }
 
+function get_url(){
+  const origin = window.location.origin
+  let wss_scheme = 'ws'
+  if (origin.startsWith('https')){
+    wss_scheme = 'wss'
+  }
+  return wss_scheme+'://'+window.location.host+":8001/chat"
 
+}
 
 function back_ (){
   let device = window.devicePixelRatio
