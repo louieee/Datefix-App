@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
 
@@ -116,11 +116,15 @@ SENDGRID_SANDBOX_MODE_IN_DEBUG = False
 
 EMAIL_HOST = 'smtp.sendgrid.net'
 
-EMAIL_USE_TLS = True
+EMAIL_USE_SSL = True
 
-EMAIL_PORT = 587
+EMAIL_PORT = 465
 
 EMAIL_HOST_USER = 'apikey'
+
+EMAIL_SSL_KEYFILE = '/etc/letsencrypt/live/datefix.net/privkey.pem'
+
+EMAIL_SSL_CERTFILE = '/etc/letsencrypt/live/datefix.net/fullchain.pem'
 
 EMAIL_HOST_PASSWORD = config('SENDGRID_API_KEY')
 
