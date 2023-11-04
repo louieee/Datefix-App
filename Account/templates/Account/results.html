@@ -187,7 +187,7 @@ Match Results
 					<form id="matches-form" {% if matches_length > 2 %} action={% url 'results' %} method="post">
 						{% csrf_token %}
 						{% else %}
-						action={% url 'dashboard' %} method="get">
+						action={% url 'home' %} method="get">
 						{% endif %}
                         {% if message %}
 			<div class="alert alert-{{status}} text-center">
@@ -231,7 +231,7 @@ Match Results
 								{% if matches_length > 2 %}
 								<i class="icon-chat"></i><span> Confirm Matches
 									{% else %}
-									<span> Back to Dashboard
+									<span> Back to Home
 										{% endif %} </span></button>
 						</div>
 

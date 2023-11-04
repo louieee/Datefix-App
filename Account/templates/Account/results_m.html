@@ -204,7 +204,7 @@ Match Results
 					<form id="matches-form" {% if matches_length == 2 %} action={% url 'chatroom' %} method="get">
 						{% csrf_token %}
 						{% else %}
-						action={% url 'dashboard' %} method="get">
+						action={% url 'home' %} method="get">
 						{% endif %}
 
 						<div class="center topmargin" data-easing="easeInOutExpo" data-speed="1500">
@@ -213,7 +213,7 @@ Match Results
 								{% if matches_length > 0 %}
 								<i class="icon-chat"></i><span> Proceed to ChatRoom
 									{% else %}
-									<span> Back to Dashboard
+									<span> Back to Home
 										{% endif %} </span></button>
 						</div>
 

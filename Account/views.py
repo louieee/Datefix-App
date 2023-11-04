@@ -6,7 +6,7 @@ from django.views.decorators.csrf import csrf_exempt
 from .models import User, PersonalityTest, Couple
 import json
 from .algorithms import match_user, flash, display, send_verification, get_username, get_personality, get_score
-from Chat.algorithms import create_chat
+from Chat.algorithms import create_chat, purify_email
 
 
 # Create your views here.
@@ -15,9 +15,10 @@ from Chat.algorithms import create_chat
 def login(request):
 	if request.method == 'POST':
 		data = request.POST
-		if "email" not in data or "password" not in data:
+		if "email" not in data and "password" not in data:
 			flash(request, 'No login details was entered !', 'danger', 'remove-sign')
 			return redirect('login')
+        data['email'] = purify_email(data['email'])
 		user = User.objects.filter(email__iexact=data['email']).first()
 		if not user:
 			flash(request, 'There is no Account with this email address !', 'info', 'info-sign')
@@ -49,7 +50,7 @@ def login(request):
 		return render(request, 'Account/login.html', {'message': flash_[0], 'status': flash_[1], "icon": flash_[2]})
 
 
-@login_required
+@login_required(login_url='login')
 def logout(request):
 	user = User.objects.get(id=request.user.id)
 	from datetime import datetime
@@ -71,8 +72,8 @@ def personality(request):
 		user = None
 		score = int(data['score'])
 		if 'email' not in request.session:
-			request.session['email'] = data['email']
-		test, _ = PersonalityTest.objects.get_or_create(email=str(data['email']).lower())
+			request.session['email'] = purify_email(data['email'])
+		test, _ = PersonalityTest.objects.get_or_create(email=purify_email(data['email']))
 		if request.user.is_authenticated and 'is_user' not in request.session and data['email'] == request.user.email:
 			user = request.user
 			request.session['is_user'] = True
@@ -190,29 +191,27 @@ def signup(request):
 				'first-name', False):
 			flash(request, 'Some Fields are empty !', 'danger', 'remove-sign')
 			return redirect('login')
-
-		try:
-			User.objects.get(email=request.POST['email'])
+		email = purify_email(str(request.POST['email']))
+		user = User.objects.filter(email=email).first()
+		if user is not None:
 			flash(request, 'This email already exists !', 'danger', 'remove-sign')
 			return redirect('login')
-		except User.DoesNotExist:
-			username = get_username()
-			user = User.objects.create_user(
-				username=username,
-				email=request.POST['email'],
-				password=request.POST['password1'],
-				first_name=request.POST['first-name'],
-				last_name=request.POST['last-name'],
-				sex=request.POST['sex'],
-				phone=request.POST['phone']
-			)
-			user.save()
-			flash(request, f"{request.POST['first-name']}, your account has been "
-			               f"created successfully.", 'success', 'thumbs-up')
-			request.session['email'] = user.email
-			send_verification(request, user)
-			return redirect('verification')
-
+		username = get_username()
+		user = User.objects.create_user(
+			username=username,
+			email=email,
+			password=request.POST['password1'],
+			first_name=request.POST['first-name'],
+			last_name=request.POST['last-name'],
+			sex=request.POST['sex'],
+			phone=request.POST['phone']
+		)
+		user.save()
+		flash(request, f"{request.POST['first-name']}, your account has been "
+					   f"created successfully.", 'success', 'thumbs-up')
+		request.session['email'] = user.email
+		send_verification(request, user)
+		return redirect('verification')
 	if request.method == 'GET':
 		if request.user.is_authenticated:
 			return redirect('dashboard')
@@ -235,14 +234,19 @@ def dashboard(request):
 		else:
 			if user.complete_match and user.can_be_matched:
 				return redirect('chatroom')
+		if user.session is not -1 and user.can_be_matched:
+			return redirect('chatroom')
+		else:
+			if user.complete_match() and user.can_be_matched:
+				return redirect('chatroom')
 
-			if user.user_data == '{}':
+			if user.user_data == dict():
 				return render(request, 'Account/profile.html')
 
-			if user.choice_data == '{}':
-				user_details = user.user_data
-				user_details['registered'] = True
-				return render(request, 'Account/profile.html', user_details)
+            if user.choice_data == dict():
+                user_details = user.user_data
+                user_details['registered'] = True
+                return render(request, 'Account/profile.html', user_details)
 
 			if user.sex == 'male' and not user.complete_match and user.can_be_matched:
 				return redirect('results')
@@ -305,7 +309,7 @@ def verified(request):
 # verify function is verified
 def verify(request):
 	if request.method == 'POST':
-		flash(request, 'Invalid Request !', 'danger')
+		flash(request, 'Invalid Request !', 'danger', 'remove-sign')
 		return redirect('login')
 
 	if 'code' not in request.session:
@@ -316,7 +320,7 @@ def verify(request):
 
 	del request.session['code']
 	request.session['verified'] = True
-	request.session['email'] = request.GET['email']
+	request.session['email'] = purify_email(request.GET['email'])
 	return redirect('verified')
 
 
@@ -327,8 +331,9 @@ def not_found(request):
 
 # verified
 def verification(request):
-	return render(request, 'Account/verification-link-sent.html', {"email": request.session['email']})
-
+	if 'email' in request.session:
+		return render(request, 'Account/verification-link-sent.html', {"email": request.session['email']})
+	return redirect('login')
 
 # verified
 def personality_test(request):
@@ -385,7 +390,7 @@ def test_result(request):
 				)
 			)
 			return render(request, 'Account/personality_result.html', {'data': data,
-			                                                           "email": request.session['email'].split('@')[0]})
+																	   "email": request.session['email'].split('@')[0]})
 		except (PersonalityTest.DoesNotExist, KeyError):
 			return redirect('personality_test')
 
@@ -395,7 +400,7 @@ def test_result(request):
 
 
 @csrf_exempt
-@login_required
+@login_required(login_url='login')
 def decrypt(request):
 	if request.method == 'POST':
 		user = User.objects.get(id=request.user.id)
@@ -405,7 +410,7 @@ def decrypt(request):
 
 
 @csrf_exempt
-@login_required
+@login_required(login_url='login')
 def encrypt(request):
 	if request.method == 'POST':
 		user = User.objects.get(id=request.user.id)

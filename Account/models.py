@@ -1,4 +1,6 @@
 from django.db import models
+import os
+from django.core.validators import validate_email
 from django.contrib.auth.models import AbstractUser
 import json
 from django.db.models import Q
@@ -21,6 +23,7 @@ class User(AbstractUser):
 	status = models.CharField(max_length=64, default='Offline')
 	can_be_matched = models.BooleanField(default=False)
 	extra_support = models.BooleanField(default=False)
+    email = models.EmailField(unique=True, validators=[validate_email])
 
 	@property
 	def complete_match(self):

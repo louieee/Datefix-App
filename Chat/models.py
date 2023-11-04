@@ -1,3 +1,5 @@
+import base64
+
 from django.db import models
 from django.db.models import Q
 from django.utils import timezone
@@ -57,7 +59,11 @@ class ChatThread(models.Model):
 			text_file.write(f"{msg.sender.username} "
 			                f"({msg.datetime.time().strftime('%I:%M %p')}): {msg.actual_text}\n")
 		text_file.close()
-		return text_file
+        return {
+            "content": base64.b64encode(text_file.read().encode()).decode(),
+            "type": "text/plain",
+            "filename": f'Chat_with_{other_user.username}.txt'
+        }
 
 	def get_chat(self, user_position):
 		self.self_delete()
