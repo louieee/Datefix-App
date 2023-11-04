@@ -1,8 +1,6 @@
-from django.conf import settings
 from django.urls import path
 from .views import *
 from django.contrib.auth import views as auth_views
-from django.conf.urls import url
 from Datefix.views import password_reset_done, password_reset, password_confirm, reset_confirm
 urlpatterns = [
     path('login/', login, name='login'),
@@ -14,11 +12,11 @@ urlpatterns = [
     path('account/verify/', verify, name="verify"),
     path('account/verified/', verified, name='verified'),
     path('account/send_verify/', verification, name='verification'),
-    url(r'^password_reset/$', password_reset,
+    path('password_reset/', password_reset,
         name='password_reset'),
-    url(r'^password_reset/done/$',
+    path('password_reset/done/',
         password_reset_done, name='password_reset_done'),
-    url(r'^reset/done/$', auth_views.PasswordResetCompleteView.as_view(),
+    path('reset/done/', auth_views.PasswordResetCompleteView.as_view(),
         name='password_reset_complete'),
     path('get_data/<type_>/', get_data, name="get_data"),
     path('personality_test/', personality_test, name="personality_test"),

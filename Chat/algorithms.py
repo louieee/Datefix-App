@@ -160,7 +160,7 @@ def delete_message(request, chat_id, id_):
     """
     chat = ChatThread.objects.get(id=chat_id)
     position = chat.position(request.user)
-    list_ = {'first': chat.first_deleted_(), 'second': chat.second_deleted_()}
+    list_ = {'first': chat.first_deleted, 'second': chat.second_deleted}
     list_ = list_[position]
     list_.append(str(id_))
     if position == 'first':
@@ -212,7 +212,7 @@ def get_profile(request, user_id):
                            'first_name': user.first_name, 'last_name': user.last_name,
                            'profile_pic': profile_picture(user.profile_picture),
                            'status': user.status,
-                           'threads': user.chatThreads()})
+                           'threads': user.chats})
 
 
 def notify_user(chat_thread, user):
@@ -246,7 +246,7 @@ def create_chat(request, your_id, user_id):
     else:
         from Datefix.algorithms import get_key
         user = User.objects.get(id=user_id)
-        list_ = user.matches_()
+        list_ = user.matches
         list_.append(int(your_id))
         user.matches = json.dumps(list_)
         user.save()
@@ -276,7 +276,7 @@ def has_chat(user):
     :param user: the user instance
     :return:
     """
-    no_of_chats = user.matches_()
+    no_of_chats = user.matches
     if len(no_of_chats) > 0:
         return True
     return False

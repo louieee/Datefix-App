@@ -1,3 +1,5 @@
+from django.db.models import Q, F, Count
+
 from .models import User, Couple
 import random
 import json
@@ -21,6 +23,7 @@ def _3_point(your_choice, choice):
     """
 	if str(your_choice) == 'Does Not Matter' or str(your_choice).isalpha():
 		return 1
+
 	if str(your_choice).isdigit():
 		your_choice = int(your_choice)
 	if str(choice).isdigit():
@@ -41,12 +44,13 @@ def age_range(me, you):
     :param you: the person who has the age.
     :return: returns a point assigned to the age.
     """
-	min_ = me.choice_data_()['min-age']
-	max_ = me.choice_data_()['max-age']
-	age = you.user_data_()['age']
-	if int(age) in range(int(min_), int(max_)):
+	min_age = me.choice_data['min-age']
+	max_age = me.choice_data['max-age']
+	age = you.user_data['age']
+	if int(age) in range(int(min_age), int(max_age)):
 		return 1
-	elif abs(int(min_) - int(age)) < 5 and abs(int(max_) - int(age)) < 5:
+	# grace of 4 years for each range
+	elif abs(int(min_age) - int(age)) < 5 and abs(int(max_age) - int(age)) < 5:
 		return 0.5
 	else:
 		return 0
@@ -83,54 +87,53 @@ def compare_users(me, you):
     """
 	mark = 0
 	absolute_match = ('residence_lga', 'residence_state', 'origin_lga',
-					  'origin_state', 'denomination', 'religion', 'marital_status', 'children',
-					  'blood_group', 'genotype')
+	                  'origin_state', 'denomination', 'religion', 'marital_status', 'children',
+	                  'blood_group', 'genotype')
 
 	_2_spectrum = ('net_worth', 'education', 'body_shape')
 
 	_3_spectrum = ('complexion', 'height', 'body_type', 'drink', 'smoke', 'conscientiousness', 'openess',
-				   'extraversion', 'agreeableness', 'neurotism')
-	deal_breakers = json.loads(me.deal_breaker)
+	               'extraversion', 'agreeableness', 'neurotism')
+	deal_breakers = me.deal_breaker
 	total = len(absolute_match) + len(_3_spectrum) + len(_2_spectrum) + 1
 
 	for i in deal_breakers:
 		if i == 'No Dealbreaker':
 			continue
 		try:
-			if str(me.choice_data_()[i]) == str(you.user_data_()[i]):
-				mark = mark + 1
+			if str(me.choice_data[i]) == str(you.user_data[i]):
+				mark += 1
 			else:
 				return 0
 		except KeyError:
-			pass
+			continue
 
 	for i in absolute_match:
 		try:
-			if str(you.user_data_()[i]) in str(me.choice_data_()[i]).split(',') \
-					or 'Does Not Matter' in str(me.choice_data_()[i]).split(','):
+			if str(you.user_data[i]) in str(me.choice_data[i]) \
+					or 'Does Not Matter' == str(me.choice_data[i]):
 				mark = mark + 1
 		except KeyError:
-			pass
+			continue
 
 	for i in _2_spectrum:
 		try:
-			if str(me.choice_data_()[i]) == 'Does Not Matter':
+			if str(me.choice_data[i]) == 'Does Not Matter':
 				mark = mark + 1
 			else:
-				mark = mark + _2_point(me.choice_data_()[i], 5, you.user_data_()[i])
+				mark = mark + _2_point(me.choice_data[i], 5, you.user_data[i])
 		except KeyError:
-			pass
+			continue
 
 	for i in _3_spectrum:
 		try:
-			mark = mark + _3_point(me.choice_data_()[i], you.user_data_()[i])
+			mark = mark + _3_point(me.choice_data[i], you.user_data[i])
 		except KeyError:
-			pass
+			continue
 	try:
 		mark = mark + age_range(me, you)
 	except KeyError:
 		pass
-
 	return (mark / total) * 100
 
 
@@ -143,11 +146,11 @@ def match_user(user):
 	success_list = {}
 	no_list = []
 	# filter users
-	all_users = (x for x in User.objects.all()
-				 if (x.complete_match() is False)
-				 and (str(x.id) not in user.jilted_list()) and (x.is_couple() is False)
-				 and (str(x.id) not in user.no_list()) and x.sex == 'male' and
-				 (x.user_data is not None or x.user_data == '') and x.can_be_matched)
+	all_users = User.objects.filter(Q(~Q(id__in=user.jilted_matches)
+	                                  & ~Q(id__in=user.no_matches) &
+	                                  ~Q(user_data=dict())),
+	                                sex__iexact="male", can_be_matched=True).only('id')
+	all_users = (user for user in all_users if not user.complete_match and not user.is_couple)
 	# compare filtered users with user and return matches
 
 	for peep in all_users:
@@ -161,8 +164,8 @@ def match_user(user):
 		except KeyError:
 			no_list.append(str(peep.id))
 	success_list = sorted(success_list.items(), key=lambda x: x[1], reverse=True)
-	user.successful_matches = json.dumps(success_list)
-	user.no_matches = json.dumps(no_list)
+	user.successful_matches = success_list
+	user.no_matches = no_list
 	user.save()
 
 
@@ -173,10 +176,10 @@ def lucky_draw(num):
     :return:  returns a list of selected couples.
     """
 	lucky_ones = []
-	lists = Couple.objects.all()
+	couples = Couple.objects.all()
 	for i in range(num):
-		random.shuffle(lists)
-		lucky_ones.append(lists[0])
+		random.shuffle(couples)
+		lucky_ones.append(couples[0])
 	return tuple(lucky_ones)
 
 
@@ -185,15 +188,13 @@ def get_username():
     This function generates a random username for a particular user.
     :return: a string => the username
     """
-	username = f'User_{str(random.randint(1, 123456789))}'
-	try:
-		User.objects.get(username=username)
-		get_username()
-	except User.DoesNotExist:
-		return username
+	username = f'Datefix User_{str(random.randint(1, 123456789))}'
+	if User.objects.filter(username__iexact=username).exists():
+		return get_username()
+	return username
 
 
-def flash(request, message, status, icon):
+def flash(request, message, status, icon=None):
 	"""
     This function sets the variables for the alert on a page.
     :param request: The HTTP request
@@ -204,216 +205,224 @@ def flash(request, message, status, icon):
     """
 	request.session['message'] = message
 	request.session['status'] = status
+	if status == "success":
+		icon = 'thumbs-up'
+	elif status == "warning":
+		icon = icon
+	elif status == "info":
+		icon = "info-icon"
+	else:
+		icon = "remove-icon"
 	request.session['icon'] = icon
 	return
 
 
 category_1 = ({
-				  'Question': 'I often do not feel I have to justify myself to people',
-				  'Weight': 1,
-				  'Category': ''
-			  },
-			  {
-				  'Question': 'I prefer not to engage with people who seem angry or upset',
-				  'Weight': -1
-			  },
-			  {
-				  'Question': 'I do not usually initiate conversations',
-				  'Weight': -1
-			  },
-			  {
-				  'Question': 'I feel comfortable around people',
-				  'Weight': 1
-			  },
-			  {
-				  'Question': 'I keep in the background',
-				  'Weight': -1
-			  },
-			  {
-				  'Question': 'I would rather improvise than spend time coming up with a detailed plan',
-				  'Weight': 1
-			  },
-			  {
-				  'Question': 'I find it easy to walk up to a group of people and join in conversation',
-				  'Weight': 1
-			  },
-			  {
-				  'Question': 'I don\'t like to draw attention to myself',
-				  'Weight': -1
-			  },
-			  {
-				  'Question': 'I care more about making sure no one gets upset than winning a debate',
-				  'Weight': 1
-			  },
-			  {
-				  'Question': 'I get so lost in my thoughts I ignore or forget my surroundings',
-				  'Weight': -1
-			  },
+	              'Question': 'I often do not feel I have to justify myself to people',
+	              'Weight': 1,
+	              'Category': ''
+              },
+              {
+	              'Question': 'I prefer not to engage with people who seem angry or upset',
+	              'Weight': -1
+              },
+              {
+	              'Question': 'I do not usually initiate conversations',
+	              'Weight': -1
+              },
+              {
+	              'Question': 'I feel comfortable around people',
+	              'Weight': 1
+              },
+              {
+	              'Question': 'I keep in the background',
+	              'Weight': -1
+              },
+              {
+	              'Question': 'I would rather improvise than spend time coming up with a detailed plan',
+	              'Weight': 1
+              },
+              {
+	              'Question': 'I find it easy to walk up to a group of people and join in conversation',
+	              'Weight': 1
+              },
+              {
+	              'Question': 'I don\'t like to draw attention to myself',
+	              'Weight': -1
+              },
+              {
+	              'Question': 'I care more about making sure no one gets upset than winning a debate',
+	              'Weight': 1
+              },
+              {
+	              'Question': 'I get so lost in my thoughts I ignore or forget my surroundings',
+	              'Weight': -1
+              },
 )
 category_2 = ({
-				  'Question': 'I get stressed out easily',
-				  'Weight': 1
-			  },
-			  {
-				  'Question': 'I am relaxed most of the time',
-				  'Weight': -1
-			  },
-			  {
-				  'Question': 'I worry about things',
-				  'Weight': 1
-			  },
-			  {
-				  'Question': 'I seldom feel blue',
-				  'Weight': -1
-			  },
-			  {
-				  'Question': 'I am easily disturbed',
-				  'Weight': 1
-			  },
-			  {
-				  'Question': 'I get upset easily',
-				  'Weight': 1
-			  },
-			  {
-				  'Question': 'I change my mood a lot',
-				  'Weight': 1
-			  },
-			  {
-				  'Question': 'I have frequent mood swings',
-				  'Weight': 1
-			  },
-			  {
-				  'Question': 'I get irritated easily',
-				  'Weight': 1
-			  },
-			  {
-				  'Question': 'I often feel blue',
-				  'Weight': 1
-			  },
+	              'Question': 'I get stressed out easily',
+	              'Weight': 1
+              },
+              {
+	              'Question': 'I am relaxed most of the time',
+	              'Weight': -1
+              },
+              {
+	              'Question': 'I worry about things',
+	              'Weight': 1
+              },
+              {
+	              'Question': 'I seldom feel blue',
+	              'Weight': -1
+              },
+              {
+	              'Question': 'I am easily disturbed',
+	              'Weight': 1
+              },
+              {
+	              'Question': 'I get upset easily',
+	              'Weight': 1
+              },
+              {
+	              'Question': 'I change my mood a lot',
+	              'Weight': 1
+              },
+              {
+	              'Question': 'I have frequent mood swings',
+	              'Weight': 1
+              },
+              {
+	              'Question': 'I get irritated easily',
+	              'Weight': 1
+              },
+              {
+	              'Question': 'I often feel blue',
+	              'Weight': 1
+              },
 )
 category_3 = ({
-				  'Question': 'I feel little concern for others',
-				  'Weight': -1
-			  },
-			  {
-				  'Question': 'I am interested in people',
-				  'Weight': 1
-			  },
-			  {
-				  'Question': 'I insult people',
-				  'Weight': -1
-			  },
-			  {
-				  'Question': 'I sympathize with others\' feelings',
-				  'Weight': 1
-			  },
-			  {
-				  'Question': 'I am not interested in other people\'s problems',
-				  'Weight': -1
-			  },
-			  {
-				  'Question': 'I have a soft heart',
-				  'Weight': 1
-			  },
-			  {
-				  'Question': 'I am not really interested in others',
-				  'Weight': -1
-			  },
-			  {
-				  'Question': 'I take time out for others',
-				  'Weight': 1
-			  },
-			  {
-				  'Question': 'I feel others\' emotions',
-				  'Weight': 1
-			  },
-			  {
-				  'Question': 'I make people feel at ease',
-				  'Weight': 1
-			  },
+	              'Question': 'I feel little concern for others',
+	              'Weight': -1
+              },
+              {
+	              'Question': 'I am interested in people',
+	              'Weight': 1
+              },
+              {
+	              'Question': 'I insult people',
+	              'Weight': -1
+              },
+              {
+	              'Question': 'I sympathize with others\' feelings',
+	              'Weight': 1
+              },
+              {
+	              'Question': 'I am not interested in other people\'s problems',
+	              'Weight': -1
+              },
+              {
+	              'Question': 'I have a soft heart',
+	              'Weight': 1
+              },
+              {
+	              'Question': 'I am not really interested in others',
+	              'Weight': -1
+              },
+              {
+	              'Question': 'I take time out for others',
+	              'Weight': 1
+              },
+              {
+	              'Question': 'I feel others\' emotions',
+	              'Weight': 1
+              },
+              {
+	              'Question': 'I make people feel at ease',
+	              'Weight': 1
+              },
 
 )
 category_4 = ({
-				  'Question': 'I am always prepared',
-				  'Weight': 1
-			  },
-			  {
-				  'Question': 'I leave my belongings around',
-				  'Weight': -1
-			  },
-			  {
-				  'Question': 'I pay attention to detail',
-				  'Weight': 1
-			  },
-			  {
-				  'Question': 'I make a mess of things',
-				  'Weight': -1
-			  },
-			  {
-				  'Question': 'I get chores done right away',
-				  'Weight': 1
-			  },
-			  {
-				  'Question': 'I like order',
-				  'Weight': 1
-			  },
-			  {
-				  'Question': 'I try to avoid my duties',
-				  'Weight': -1
-			  },
-			  {
-				  'Question': 'I follow a schedule',
-				  'Weight': 1
-			  },
-			  {
-				  'Question': 'I am thorough in my work',
-				  'Weight': 1
-			  },
-			  {
-				  'Question': 'I often forget to put things back in their proper place',
-				  'Weight': -1
-			  },
+	              'Question': 'I am always prepared',
+	              'Weight': 1
+              },
+              {
+	              'Question': 'I leave my belongings around',
+	              'Weight': -1
+              },
+              {
+	              'Question': 'I pay attention to detail',
+	              'Weight': 1
+              },
+              {
+	              'Question': 'I make a mess of things',
+	              'Weight': -1
+              },
+              {
+	              'Question': 'I get chores done right away',
+	              'Weight': 1
+              },
+              {
+	              'Question': 'I like order',
+	              'Weight': 1
+              },
+              {
+	              'Question': 'I try to avoid my duties',
+	              'Weight': -1
+              },
+              {
+	              'Question': 'I follow a schedule',
+	              'Weight': 1
+              },
+              {
+	              'Question': 'I am thorough in my work',
+	              'Weight': 1
+              },
+              {
+	              'Question': 'I often forget to put things back in their proper place',
+	              'Weight': -1
+              },
 )
 category_5 = ({
-				  'Question': 'I have a rich vocabulary',
-				  'Weight': 1
-			  },
-			  {
-				  'Question': 'I have difficulty understanding abstract ideas',
-				  'Weight': -1
-			  },
-			  {
-				  'Question': 'I have a vivid imagination',
-				  'Weight': 1
-			  },
-			  {
-				  'Question': 'I am not interested in abstract ideas',
-				  'Weight': -1
-			  },
-			  {
-				  'Question': 'I have excellent ideas',
-				  'Weight': 1
-			  },
-			  {
-				  'Question': 'I do not have a good imagination',
-				  'Weight': -1
-			  },
-			  {
-				  'Question': 'I am quick to understand things',
-				  'Weight': 1
-			  },
-			  {
-				  'Question': 'I spend time reflecting on things',
-				  'Weight': 1
-			  },
-			  {
-				  'Question': 'I am full of ideas',
-				  'Weight': 1
-			  },
-			  {
-				  'Question': 'I often use difficult words',
-				  'Weight': 1
-			  },
+	              'Question': 'I have a rich vocabulary',
+	              'Weight': 1
+              },
+              {
+	              'Question': 'I have difficulty understanding abstract ideas',
+	              'Weight': -1
+              },
+              {
+	              'Question': 'I have a vivid imagination',
+	              'Weight': 1
+              },
+              {
+	              'Question': 'I am not interested in abstract ideas',
+	              'Weight': -1
+              },
+              {
+	              'Question': 'I have excellent ideas',
+	              'Weight': 1
+              },
+              {
+	              'Question': 'I do not have a good imagination',
+	              'Weight': -1
+              },
+              {
+	              'Question': 'I am quick to understand things',
+	              'Weight': 1
+              },
+              {
+	              'Question': 'I spend time reflecting on things',
+	              'Weight': 1
+              },
+              {
+	              'Question': 'I am full of ideas',
+	              'Weight': 1
+              },
+              {
+	              'Question': 'I often use difficult words',
+	              'Weight': 1
+              },
 
 )
 
@@ -574,10 +583,10 @@ def send_verification(request, user):
     :return:
     """
 	request.session['code'] = request.POST['csrfmiddlewaretoken']
-	link = f'http://{request.get_host()}/account/verify/?code={request.POST["csrfmiddlewaretoken"]}&email={request.POST["email"]}'
+	link = f'https://{request.get_host()}/account/verify/?code={request.POST["csrfmiddlewaretoken"]}&email={request.POST["email"]}'
 	request.session['verification_sent'] = True
 	send_email(user.first_name, 'Email Verification', 'We are excited to have you on Datefix', request.POST['email'],
-			   link, None)
+	           link, None)
 
 
 def dict_to_zip(data):
@@ -598,9 +607,7 @@ def had_session(user):
     :param user: User instance
     :return: a boolean result.
     """
-	if user.jilted_matches == '[]' and user.couple_ids == '[]':
-		return False
-	return True
+	return user.jilted_matches or user.couple_ids
 
 
-from services.sendgrid_service import send_email
+from services.email_service import send_email

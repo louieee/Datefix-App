@@ -30,57 +30,57 @@ ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
 # Application definition
 
 INSTALLED_APPS = [
-    'channels',
-    'Account',
-    'Chat',
-    'Payment',
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
+	'channels',
+	'Account',
+	'Chat',
+	'Payment',
+	'django.contrib.admin',
+	'django.contrib.auth',
+	'django.contrib.contenttypes',
+	'django.contrib.sessions',
+	'django.contrib.messages',
+	'django.contrib.staticfiles',
 ]
 
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+	'django.middleware.security.SecurityMiddleware',
+	'django.middleware.common.CommonMiddleware',
+	'whitenoise.middleware.WhiteNoiseMiddleware',
+	'django.contrib.sessions.middleware.SessionMiddleware',
+	'django.middleware.csrf.CsrfViewMiddleware',
+	'django.contrib.auth.middleware.AuthenticationMiddleware',
+	'django.contrib.messages.middleware.MessageMiddleware',
+	'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-SECURE_SSL_REDIRECT = True
+if DEBUG == "false":
+	SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+	SECURE_SSL_REDIRECT = True
 
 ROOT_URLCONF = 'Datefix.urls'
 
 TEMPLATES = [
-    {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
-            ],
-        },
-    },
+	{
+		'BACKEND': 'django.template.backends.django.DjangoTemplates',
+		'DIRS': [os.path.join(BASE_DIR, 'templates')],
+		'APP_DIRS': True,
+		'OPTIONS': {
+			'context_processors': [
+				'django.template.context_processors.debug',
+				'django.template.context_processors.request',
+				'django.contrib.auth.context_processors.auth',
+				'django.contrib.messages.context_processors.messages',
+			],
+		},
+	},
 ]
 
 CHANNEL_LAYERS = {"default": {
-    "BACKEND": "channels_redis.core.RedisChannelLayer",
-    "CONFIG": {
-        "hosts": [os.environ.get('REDIS_URL', 'redis://redis:6379')],
-        # "hosts": [('localhost', 6379)],
+	"BACKEND": "channels_redis.core.RedisChannelLayer",
+	"CONFIG": {
+		"hosts": [os.environ.get('REDIS_URL', 'redis://redis:6379')],
+		# "hosts": [('localhost', 6379)],
 
-    }
+	}
 
 }
 }
@@ -92,18 +92,18 @@ ASGI_APPLICATION = 'Datefix.routing.application'
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "NAME": config('DB_NAME'),
-        "USER": config('DB_USER'),
-        "PASSWORD": config('DB_PASSWORD'),
-        "HOST": config('DB_HOST'),
-        "PORT": config('DB_PORT'),
-        "OPTIONS": {
-            "sslmode": "verify-ca",
-            "sslrootcert": os.path.join(BASE_DIR, "rds-combined-ca-bundle.pem")
-        }
-    }
+	"default": {
+		"ENGINE": "django.db.backends.postgresql_psycopg2",
+		"NAME": config('DB_NAME'),
+		"USER": config('DB_USER'),
+		"PASSWORD": config('DB_PASSWORD'),
+		"HOST": config('DB_HOST'),
+		"PORT": config('DB_PORT'),
+		# "OPTIONS": {
+		# 	"sslmode": "verify-ca",
+		# 	"sslrootcert": os.path.join(BASE_DIR, "rds-combined-ca-bundle.pem")
+		# }
+	}
 }
 
 EMAIL_BACKEND = 'sendgrid_backend.SendgridBackend'
@@ -130,18 +130,18 @@ DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL')
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
+	{
+		'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+	},
+	{
+		'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+	},
+	{
+		'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+	},
+	{
+		'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+	},
 ]
 
 # Internationalization
@@ -171,14 +171,14 @@ LOGOUT_REDIRECT_URL = '/'
 AUTH_USER_MODEL = "Account.User"
 
 AUTHENTICATION_BACKENDS = [
-    'django.contrib.auth.backends.ModelBackend',
-    'Account.customAuth.EmailAuthBackend'
+	'django.contrib.auth.backends.ModelBackend',
+	'Account.customAuth.EmailAuthBackend'
 ]
 
 import dj_database_url
-
 
 prod_db = dj_database_url.config()
 DATABASES['default'].update(prod_db)
 
 # STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
