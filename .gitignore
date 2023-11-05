@@ -115,4 +115,5 @@ media/
 .idea
 static
 db.sqlite3
+migrations
 

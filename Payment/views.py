@@ -9,14 +9,15 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 
 from Account.models import User
-from Payment.algorithm import can_be_matched
 from services.ravepay_services import RavePayServices
 from .models import Payment
 
 
 @login_required(login_url='login')
 def redirect_match(request):
-	if can_be_matched(request.user.id):
+	user = User.objects.get(id=request.user.id)
+	user.update_matchability()
+	if user.can_be_matched:
 		return render(request, 'Payment/match.html')
 	else:
 		return redirect('personality_test')

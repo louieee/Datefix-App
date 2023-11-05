@@ -1,9 +1,9 @@
-from django.conf.urls import url
-from django.urls import path, include
-from channels.routing import ProtocolTypeRouter, URLRouter
 from channels.auth import AuthMiddlewareStack
-from channels.security.websocket import AllowedHostsOriginValidator
 from channels.routing import ProtocolTypeRouter
+from channels.routing import URLRouter
+from channels.security.websocket import AllowedHostsOriginValidator
+from django.urls import path
+
 from Chat.consumers import ChatConsumer
 
 application = ProtocolTypeRouter({

@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, HttpResponse
 
 # Create your views here.
-from Chat.algorithms import jilt
+from Chat.utils import jilt
 from Chat.models import ChatThread
 
 
@@ -9,8 +9,7 @@ def chat(request):
     if request.user.is_authenticated:
         from Account.models import User
         user = User.objects.get(id=request.user.id)
-        from Chat.algorithms import has_chat
-        if has_chat(user) and user.can_be_matched:
+        if user.has_chat and user.can_be_matched:
             return render(request, 'Chat/chat.html')
         elif user.session == 0:
             return redirect('end_session')

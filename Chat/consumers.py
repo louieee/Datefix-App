@@ -1,5 +1,7 @@
 import asyncio
 import json
+import logging
+
 from Account.models import User
 from channels.consumer import AsyncConsumer
 from channels.db import database_sync_to_async
@@ -48,21 +50,21 @@ class ChatConsumer(AsyncConsumer):
             await login(self)
 
         if self.chat_data['function'] == 'connect':
-            try:
-                chat_id = self.chat_data['chat_id']
-                self.thread_obj = await self.get_thread(chat_id)
-                self.me = await self.get_user(self.chat_data['username'])
-                self.other_user = await self.get_receiver(self.thread_obj, self.me)
-                chat_room = f"chat_{self.thread_obj.id}"
-                self.chat_room = chat_room
-                await self.channel_layer.group_add(
-                    chat_room,
-                    self.channel_name
-                )
-
-                await self.set_user_status('Online')
-            except (ChatThread.DoesNotExist, AttributeError):
-                pass
+            chat_id = self.chat_data['chat_id']
+            self.thread_obj = await self.get_thread(chat_id)
+            if not self.thread_obj:
+                return
+            self.me = await self.get_user(self.chat_data['username'])
+            if not self.me:
+                return
+            self.other_user = await self.get_receiver(self.thread_obj, self.me)
+            chat_room = f"chat_{self.thread_obj.id}"
+            self.chat_room = chat_room
+            await self.channel_layer.group_add(
+                chat_room,
+                self.channel_name
+            )
+            await self.set_user_status('Online')
 
             self.chat_data['chat_room'] = self.chat_room
             await self.channel_layer.group_send(
@@ -149,8 +151,8 @@ class ChatConsumer(AsyncConsumer):
         pass
 
     @database_sync_to_async
-    def get_thread(self, id_):
-        self.thread_obj = ChatThread.objects.get(id=id_)
+    def get_thread(self, thread_id: int):
+        self.thread_obj = ChatThread.objects.filter(id=thread_id).first()
         return self.thread_obj
 
     @database_sync_to_async
@@ -160,7 +162,7 @@ class ChatConsumer(AsyncConsumer):
 
     @database_sync_to_async
     def save_message(self, chat, data):
-        from Chat.algorithms import activate_expiration
+        from Chat.utils import activate_expiration
         activate_expiration(chat=chat, user=self.me)
         encrypted_data = chat.encrypt(data['message'])
         chat_msg = ChatMessage.objects.create(sender_id=int(data['sender_id']), chat=chat,
@@ -173,7 +175,7 @@ class ChatConsumer(AsyncConsumer):
 
     @database_sync_to_async
     def get_user(self, username):
-        self.me = User.objects.get(username=username)
+        self.me = User.objects.filter(username__iexact=username).first()
         return self.me
 
     @database_sync_to_async
@@ -186,20 +188,19 @@ class ChatConsumer(AsyncConsumer):
 
     @database_sync_to_async
     def choose(self):
-        from Chat.algorithms import select_match
+        from Chat.utils import select_match
         try:
             data = select_match(self.thread_obj, self.other_user, self.me)
-            try:
-                int(data)
+            if str(data).isdigit():
                 self.chat_data['result'] = {'status': 'successful', 'couple_id': data}
-            except ValueError:
+            else:
                 self.chat_data['result'] = {'status': 'successful', 'response': data}
-        except ChatThread.DoesNotExist:
-            pass
+        except ChatThread.DoesNotExist as e:
+            logging.critical(f"Chat Error: {e}")
 
     @database_sync_to_async
     def reject(self):
-        from Chat.algorithms import jilt
+        from Chat.utils import jilt
         jilt(self.thread_obj, self.other_user, self.me)
         self.chat_data['result'] = 'succeed'
         return
@@ -207,7 +208,7 @@ class ChatConsumer(AsyncConsumer):
     @database_sync_to_async
     def delete_message(self, id_):
         msg = ChatMessage.objects.get(id=id_)
-        if msg.expired() is False:
+        if not msg.expired:
             msg.delete()
             self.chat_data['result'] = 'Deleted'
             return 'Deleted'
@@ -225,6 +226,5 @@ class ChatConsumer(AsyncConsumer):
             user.status = f"Last seen at {datetime.now().time().strftime('%I:%M %p')} " \
                           f"on {datetime.now().date().strftime('%e - %b - %Y')}."
             user.save()
-
         self.chat_data['status'] = user.status
         return

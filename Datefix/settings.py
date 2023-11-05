@@ -106,9 +106,9 @@ DATABASES = {
 	}
 }
 
-EMAIL_BACKEND = 'sendgrid_backend.SendgridBackend'
+# EMAIL_BACKEND = 'sendgrid_backend.SendgridBackend'
 
-# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 SENDGRID_API_KEY = config('SENDGRID_API_KEY')
 
