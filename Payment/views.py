@@ -69,9 +69,9 @@ def rave_redirect(request, user_id, package, duration, tx_ref):
 
 		payment.status = 'PAID'
 		if payment.duration == 'QUARTERLY':
-			payment.expiry_date = payment.date_of_payment.astimezone() + timedelta(days=90)
+			payment.expiry_date = payment.date_of_payment + timedelta(days=90)
 		if payment.duration == 'YEARLY':
-			payment.expiry_date = payment.date_of_payment.astimezone() + timedelta(days=365)
+			payment.expiry_date = payment.date_of_payment + timedelta(days=365)
 		payment.save()
 		user = User.objects.get(id=payment.payer_id)
 		user.can_be_matched = True
@@ -90,7 +90,7 @@ def rave_redirect(request, user_id, package, duration, tx_ref):
 def rave_pay(request):
 	user = User.objects.get(id=request.user.id)
 	if request.method == 'GET':
-		if can_be_matched(user.id):
+		if user.update_matchability():
 			return redirect('redirect_match')
 		else:
 			return render(request, 'Payment/pay.html')

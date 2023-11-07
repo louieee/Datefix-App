@@ -18,8 +18,8 @@ def login(request):
         if "email" not in data and "password" not in data:
             flash(request, 'No login details was entered !', 'danger', 'remove-sign')
             return redirect('login')
-        data['email'] = purify_email(data['email'])
-        user = User.objects.filter(email__iexact=data['email']).first()
+        email = purify_email(data['email'])
+        user = User.objects.filter(email__iexact=email).first()
         if not user:
             flash(request, 'There is no Account with this email address !', 'info', 'info-sign')
             return redirect('not_found')
@@ -28,7 +28,7 @@ def login(request):
             send_verification(request, user)
             return redirect('verification')
         user = auth.authenticate(
-            request, username=data['email'], password=data['password'])
+            request, username=email, password=data['password'])
         if user is None:
             flash(request, 'Password Incorrect!', 'danger', 'remove-sign')
             return redirect('login')
@@ -142,16 +142,17 @@ def results(request):
             return render(request, 'Account/results_m.html',
                           {'matches': matches, "matches_length": len(user.matches)})
         else:
+            # TODO: update the flash method
             flash(request, "Invalid user gender!", "danger")
 
     elif request.method == 'POST':
         match_1 = int(request.POST['match1'])
         match_2 = int(request.POST['match2'])
+        matches = [match_1, match_2]
         if match_1 == match_2:
-            flash(request, 'The selected users are the same. please select different users.', 'danger', 'remove-icon')
-            return redirect('results')
-        user.matches = json.dumps([int(x) for x in (match_1, match_2)])
-        user.session = 2
+            matches = [match_1]
+        user.matches = matches
+        user.session = len(matches)
         user.save()
         match_comp = [user.id for user in User.objects.filter(id__in=(match_1, match_2)) if user.complete_match]
         verb = ''
@@ -165,8 +166,8 @@ def results(request):
             request.session['icon'] = 'remove-icon'
             return redirect('results')
         if len(match_comp) == 0:
-            add_new(request, user, match_1)
-            add_new(request, user, match_2)
+            for match in matches:
+                add_new(request, user, match)
             return redirect('chatroom')
     else:
         flash(request, "Invalid Request", "danger")
@@ -237,7 +238,7 @@ def dashboard(request):
         if user.session is not -1 and user.can_be_matched:
             return redirect('chatroom')
         else:
-            if user.complete_match() and user.can_be_matched:
+            if user.complete_match and user.can_be_matched:
                 return redirect('chatroom')
 
             if user.user_data == dict():
@@ -250,6 +251,9 @@ def dashboard(request):
 
             if user.sex == 'male' and not user.complete_match and user.can_be_matched:
                 return redirect('results')
+                # user_details = user.user_data
+                # user_details['registered'] = True
+                # return render(request, 'Account/profile.html', user_details)
 
             if user.sex == 'female' and not user.complete_match:
                 user_details = user.user_data
@@ -269,25 +273,23 @@ def matching(request):
 # verified
 def get_data(request, type_):
     if request.method == 'GET':
+        data = {key: request.GET[key] for key in request.GET.keys()}
         user = User.objects.get(id=request.user.id)
         if type_ == 'user':
-            user_data = json.loads(user.user_data)
-            user_data.update(request.GET)
-            user.user_data = json.dumps(user_data).replace(
-                ']', '').replace('[', '')
+            user_data = user.user_data
+            user_data.update(data)
+            user.user_data = user_data
             user.save()
             return HttpResponse('success')
 
         if type_ == 'partner':
-            user_data = json.loads(user.choice_data)
             if request.GET['residence_state'] == '' and request.GET['origin_state'] == '':
                 return HttpResponse('success')
-
-            user_data.update(request.GET)
-            user.deal_breaker = f"[{json.dumps([user_data['dealbreaker1'], user_data['dealbreaker2']]).replace(']', '').replace('[', '')}]"
+            user_data = user.choice_data
+            user_data.update(data)
+            user.deal_breaker = [user_data['dealbreaker1'], user_data['dealbreaker2']]
             del (user_data['dealbreaker1'], user_data['dealbreaker2'])
-            user.choice_data = json.dumps(
-                user_data).replace(']', '').replace('[', '')
+            user.choice_data = user_data
             user.save()
             return HttpResponse('success')
 
@@ -296,6 +298,7 @@ def get_data(request, type_):
 
 # verified
 def verified(request):
+    print("Session: ", request.session)
     if 'email' in request.session and request.session['verified'] is True:
         user = User.objects.get(email=request.session['email'])
         user.verified = True
@@ -320,6 +323,7 @@ def verify(request):
 
     del request.session['code']
     request.session['verified'] = True
+    print(request.GET)
     request.session['email'] = purify_email(request.GET['email'])
     return redirect('verified')
 
@@ -334,6 +338,7 @@ def verification(request):
     if 'email' in request.session:
         return render(request, 'Account/verification-link-sent.html', {"email": request.session['email']})
     return redirect('login')
+
 
 # verified
 def personality_test(request):

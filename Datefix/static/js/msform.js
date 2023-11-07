@@ -95,18 +95,18 @@ function topFunction() {
 function submit_form() {
   console.log('date fix');
   $.ajax({
-    url: "/get_data/user",
+    url: "/get_data/user/",
     data: objectifyForm($("#user-form").serializeArray()),
     type: "GET",
     success: (data) => {
       if (data === 'success') {
         $.ajax({
-          url: "/get_data/partner",
+          url: "/get_data/partner/",
           data: objectifyForm($("#partner-form").serializeArray()),
           type: "GET",
           success: (data) => {
             if (data === 'success') {
-              window.location.href = '/payment/pay'
+              window.location.href = '/payment/pay/'
             }
           }
         })

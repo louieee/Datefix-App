@@ -21,11 +21,12 @@ from .views import home, handler404_, handler403_, handler500_
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('account/', include('Account.urls')),
+    path('', include('Account.urls')),
     path('chat/', include('Chat.urls')),
     path('payment/', include('Payment.urls')),
     path('', home, name='home'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 
 handler404 = handler404_

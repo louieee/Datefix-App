@@ -1,5 +1,6 @@
 import json
 import random
+from urllib import parse
 
 from django.db.models import Q
 
@@ -189,7 +190,7 @@ def get_username():
     This function generates a random username for a particular user.
     :return: a string => the username
     """
-	username = f'Datefix User_{str(random.randint(1, 123456789))}'
+	username = f'Datefix-User-{str(random.randint(1, 123456789))}'
 	if User.objects.filter(username__iexact=username).exists():
 		return get_username()
 	return username
@@ -584,9 +585,10 @@ def send_verification(request, user):
     :return:
     """
 	request.session['code'] = request.POST['csrfmiddlewaretoken']
-	link = f'https://{request.get_host()}/account/verify/?code={request.POST["csrfmiddlewaretoken"]}&email={request.POST["email"]}'
+	link = f'https://{request.get_host()}/account/verify/?code={request.POST["csrfmiddlewaretoken"]}&' \
+	       f'email={request.POST["email"]}'
 	request.session['verification_sent'] = True
-	send_email(user.first_name, 'Email Verification', 'We are excited to have you on Datefix', request.POST['email'],
+	send_email(user.first_name, 'Email Verification', 'We are excited to have you on Datefix', [request.POST['email']],
 	           link, None)
 
 

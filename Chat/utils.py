@@ -250,7 +250,7 @@ def activate_expiration(chat, user):
         chat.notify_user(user=receiver, new_match=False)
 
 
-def purify_email(email=''):
+def purify_email(email:str):
     email = email.lower()
     email = email.replace(' ', '')
     return email

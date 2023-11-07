@@ -1,3 +1,5 @@
+import logging
+
 from django.utils.datetime_safe import datetime
 from decouple import config
 import requests
@@ -48,11 +50,16 @@ class RavePayServices:
 				"description": f"Payment for the {self.data['package']} package",
 				"logo": config('LOGO_URL')
 			}}
-		result = requests.post(url=url, headers=headers, json=data).json()
-		if result['status'] == 'success':
-			self.link = result['data']['link']
+		try:
+			result = requests.post(url=url, headers=headers, json=data).json()
+			if result['status'] == 'success':
+				self.link = result['data']['link']
+				return True
+			return False
+		except Exception as e:
+			#TODO will change it back to False
+			logging.critical(f"RAVE ERROR: {e}")
 			return True
-		return False
 
 	def create_tx_ref(self):
 		import secrets

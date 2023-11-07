@@ -184,7 +184,7 @@ Match Results
 						</div>
 					</div>
 
-					<form id="matches-form" {% if matches_length > 2 %} action={% url 'results' %} method="post">
+					<form id="matches-form" {% if matches_length > 0 %} action={% url 'results' %} method="post">
 						{% csrf_token %}
 						{% else %}
 						action={% url 'home' %} method="get">
@@ -228,7 +228,7 @@ Match Results
 						<div class="center topmargin" data-easing="easeInOutExpo" data-speed="1500">
 							<button type="submit"
 								class="button button-rounded button-reveal button-xlarge button-yellow button-light tright">
-								{% if matches_length > 2 %}
+								{% if matches_length > 0 %}
 								<i class="icon-chat"></i><span> Confirm Matches
 									{% else %}
 									<span> Back to Home
