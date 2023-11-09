@@ -41,7 +41,7 @@ class User(AbstractUser):
 
 	@property
 	def complete_match(self):
-		return self.matches.__len__() >= 2
+		return self.matches.__len__() >= 1
 
 	@property
 	def is_couple(self):
@@ -79,7 +79,8 @@ class User(AbstractUser):
 
 	@property
 	def has_chat(self):
-		return len(self.matches) > 0
+		from Chat.models import ChatThread
+		return ChatThread.objects.filter(Q(first_user=self)|Q(second_user=self)).exists()
 
 
 class Couple(models.Model):

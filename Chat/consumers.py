@@ -27,8 +27,8 @@ async def logout(self):
 
 
 class ChatConsumer(AsyncConsumer):
-    def __init__(self, scope):
-        super().__init__(scope)
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
         self.chat_data = {}
         self.thread_obj = None
         self.me = None

@@ -136,8 +136,10 @@ def get_chat_threads(request):
     if request.method == 'GET':
         chats = ChatThread.objects.filter(Q(first_user_id=request.user.id) | Q(
             second_user_id=request.user.id)).order_by('-last_message_date')
-        data = tuple([chat.serialized_data(user) for chat in chats])
-        return json.dumps({'user_id': request.user.id, "chat_threads": data})
+        threads = [chat.serialized_data(user) for chat in chats]
+        print("threads", threads)
+        return json.dumps({'user_id': request.user.id,
+                           "chat_threads": threads})
 
 
 def delete_message(request, chat_id, id_):
@@ -187,12 +189,14 @@ def get_profile(request, user_id):
                            'first_name': user.first_name, 'last_name': user.last_name,
                            'profile_pic': profile_picture(user.profile_picture),
                            'status': user.status,
-                           'threads': user.chatThreads()})
+                           'threads': list(user.chats)})
     return redirect("not_found")
 
 
-def create_chat(request, your_id: int, user_id: int):
+def create_chat(your_id: int, user_id: int):
+    from Datefix.utils import get_key
     from Account.models import User
+
     """
     This function creates a chat session between two users.
     :param request: HTTP request
@@ -200,28 +204,25 @@ def create_chat(request, your_id: int, user_id: int):
     :param user_id: The  second user instance
     :return:
     """
-    if request.user.id == user_id:
+    if your_id == user_id:
+        print("same id")
         return 'You Cannot Chat With Yourself.'
-    chats = ChatThread.objects.filter(Q(first_user_id=your_id, second_user_id=user_id) |
-                                      Q(first_user_id=user_id, second_user_id=your_id))
-    if chats.count() > 0:
+    print("not same id")
+    if ChatThread.objects.filter(Q(first_user_id=your_id, second_user_id=user_id) |
+                                      Q(first_user_id=user_id, second_user_id=your_id)).exists():
         return 'This Chat Thread Object Already Exists'
-    else:
-        from Datefix.algorithms import get_key
-        user = User.objects.get(id=user_id)
-        user_matches = user.matches
-        user_matches.append(your_id)
-        user.matches = user_matches
-        user.save()
-        secret = get_key(f'{your_id}{datetime.now().timestamp()}{user_id}')
-        expiry_date = timezone.now() + timedelta(days=30)
-        chat = ChatThread.objects.create(first_user_id=your_id,
-                                         second_user_id=user_id,
-                                         secret=secret, expiry_date=expiry_date)
-        return {"status": 200, "message": f'A Chat Thread Object has been created for you and the '
-                                          f'user with ID {user_id}',
-                "data": get_chat(chat.id, user=request.user)}
-
+    user = User.objects.get(id=user_id)
+    user_matches = user.matches
+    user_matches.append(your_id)
+    user.matches = user_matches
+    user.save()
+    secret = get_key(f'{your_id}{datetime.now().timestamp()}{user_id}')
+    expiry_date = timezone.now() + timedelta(days=30)
+    ChatThread.objects.create(first_user_id=your_id,
+                                     second_user_id=user_id,
+                                     secret=secret, expiry_date=expiry_date)
+    print("created chat")
+    return
 
 def activate_expiration(chat, user):
     """

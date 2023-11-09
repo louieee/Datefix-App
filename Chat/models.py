@@ -5,6 +5,7 @@ from django.db.models import Q
 from django.utils import timezone
 from Account.models import User
 
+
 # Create your models here.
 
 
@@ -17,11 +18,11 @@ class ChatThread(models.Model):
 	date_first = models.BooleanField(default=None, blank=True, null=True)
 	date_second = models.BooleanField(default=None, blank=True, null=True)
 	show_details = models.BooleanField(default=False)
-	first_deleted = models.JSONField(default=list)
-	second_deleted = models.JSONField(default=list)
+	first_deleted = models.JSONField(default=list, blank=True)
+	second_deleted = models.JSONField(default=list, blank=True)
 	secret = models.BinaryField()
-	expiry_date = models.DateTimeField(default=None)
-	last_message_date = models.DateTimeField(default=None, null=True)
+	expiry_date = models.DateTimeField(default=None, blank=True, null=True)
+	last_message_date = models.DateTimeField(default=None, null=True, blank=True)
 
 	def notify_user(self, user, new_match=True):
 		from Account.utils import send_email
@@ -45,8 +46,8 @@ class ChatThread(models.Model):
 			"first_name": self.get_receiver(user).first_name,
 			"last_name": self.get_receiver(user).last_name,
 			"profile_picture": profile_picture(self.get_receiver(user).profile_picture),
-			"last_message": self.last_message.serialized_data,
-			"expired": self.expired()
+			"last_message": self.last_message.serialized_data if self.last_message else None,
+			"expired": self.expired
 		}
 
 	def chat_name(self):
@@ -65,7 +66,10 @@ class ChatThread(models.Model):
 			self.save()
 		return
 
+	@property
 	def expired(self):
+		if not self.expiry_date:
+			return False
 		return self.expiry_date.__lt__(timezone.now())
 
 	def chat_messages(self, user_position):
@@ -91,8 +95,8 @@ class ChatThread(models.Model):
 		}
 
 	def get_chat(self, user_position):
-		self.self_delete()
-		self.show_detail()
+		# self.self_delete()
+		# self.show_detail()
 		chat_message_items = self.chat_messages(user_position)
 
 		data = tuple([msg.serialized_data for msg in chat_message_items])
@@ -101,7 +105,7 @@ class ChatThread(models.Model):
 			status = User.objects.get(id=self.second_user_id).status
 		if user_position == 'second':
 			status = User.objects.get(id=self.first_user_id).status
-		data = {'chat_id': self.id, 'expired': self.expired(), 'status': status, 'chat_list': data}
+		data = {'chat_id': self.id, 'expired': self.expired, 'status': status, 'chat_list': data}
 		return data
 
 	def get_receiver(self, user):

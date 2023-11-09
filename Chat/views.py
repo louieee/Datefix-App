@@ -19,27 +19,27 @@ def chat(request):
 
 def get_chat_(request, id_):
     if request.method == 'GET':
-        from Chat.algorithms import get_chat
+        from Chat.utils import get_chat
         return HttpResponse(get_chat(id_, request.user))
 
 
 def get_user(request, user_id):
-    from Chat.algorithms import get_profile
+    from Chat.utils import get_profile
     return HttpResponse(get_profile(request, user_id))
 
 
 def user_chats(request):
-    from Chat.algorithms import get_chat_threads
+    from Chat.utils import get_chat_threads
     return HttpResponse(get_chat_threads(request))
 
 
 def delete_msg(request, chat_id, id_):
-    from Chat.algorithms import delete_message
+    from Chat.utils import delete_message
     return HttpResponse(delete_message(request, chat_id, id_))
 
 
 def create_chat_api(request, user_id):
-    from Chat.algorithms import create_chat
+    from Chat.utils import create_chat
     import json
     return HttpResponse(json.dumps(create_chat(request, request.user.id, user_id)).replace("\\", ""))
 
@@ -60,7 +60,7 @@ def test_jilt(request, chat_id):
 
 
 def test_accept(request, chat_id):
-    from Chat.algorithms import select_match
+    from Chat.utils import select_match
     from Chat.models import ChatThread
     import json
     try:

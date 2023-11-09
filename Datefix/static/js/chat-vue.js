@@ -302,7 +302,7 @@ function get_url(){
   if (origin.startsWith('https')){
     wss_scheme = 'wss'
   }
-  return wss_scheme+'://'+window.location.host+":8001/chat"
+  return `${wss_scheme}://127.0.0.1:8001/chat/`
 
 }
 

@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 from django.http import JsonResponse
 from django.shortcuts import render, redirect, HttpResponse
 from django.contrib import auth
@@ -110,40 +111,34 @@ def personality(request):
 
 # verified
 def results(request):
+    from Chat.models import ChatThread
     user = User.objects.get(id=request.user.id)
-    if request.method == 'GET':
-        if user.sex == 'female':
-            show = display(request)
-            matches = user.successful_matches[:6]
-            size = len(matches)
-            match_dict = {x[0]: x[1] for x in matches}
-            select_users = User.objects.filter(id__in=(x[0] for x in matches)).only("id", "username", "user_data")
-            matches = ((
-                (user.id, match_dict[user.id]),
-                ("alpha", user.username),
-                ("Origin", user.user_data['origin_state']),
-                ["Residence", user.user_data['residence_state']],
-                ("Religion", user.user_data['religion']),
-                ("denomination", user.user_data['denomination']),
-                ("Has Children", user.user_data['children']))
-                for user in select_users)
-            if show is None:
-                return render(request, 'Account/results.html',
-                              {'matches': matches, "select": select_users.values_list("id", "username"),
-                               "matches_length": size})
-            else:
-                return render(request, 'Account/results.html',
-                              {'matches': matches, "select": select_users.values_list("id", "username"),
-                               "matches_length": size, "message": show[0],
-                               "status": show[1], "icon": show[2]})
 
-        elif user.sex == 'male':
-            matches = (User.objects.get(id=x) for x in user.matches)
-            return render(request, 'Account/results_m.html',
-                          {'matches': matches, "matches_length": len(user.matches)})
+    if request.method == 'GET':
+        match_user(user)
+        show = display(request)
+        matches = user.successful_matches[:6]
+        size = len(matches)
+        match_dict = {x[0]: x[1] for x in matches}
+        select_users = User.objects.filter(id__in=(x[0] for x in matches)).only("id", "username", "user_data")
+        matches = ((
+            (user.id, match_dict[user.id]),
+            ("alpha", user.username),
+            ("Origin", user.user_data['origin_state']),
+            ["Residence", user.user_data['residence_state']],
+            ("Religion", user.user_data['religion']),
+            ("denomination", user.user_data['denomination']),
+            ("Has Children", user.user_data['children']))
+            for user in select_users)
+        if show is None:
+            return render(request, 'Account/results.html',
+                          {'matches': matches, "select": select_users.values_list("id", "username"),
+                           "matches_length": size})
         else:
-            # TODO: update the flash method
-            flash(request, "Invalid user gender!", "danger")
+            return render(request, 'Account/results.html',
+                          {'matches': matches, "select": select_users.values_list("id", "username"),
+                           "matches_length": size, "message": show[0],
+                           "status": show[1], "icon": show[2]})
 
     elif request.method == 'POST':
         match_1 = int(request.POST['match1'])
@@ -154,31 +149,20 @@ def results(request):
         user.matches = matches
         user.session = len(matches)
         user.save()
-        match_comp = [user.id for user in User.objects.filter(id__in=(match_1, match_2)) if user.complete_match]
-        verb = ''
-        if len(match_comp) > 0:
-            if len(match_comp) == 2:
-                verb = 'has'
-            if len(match_comp) == 1:
-                verb = 'have'
-            request.session['message'] = f'{"and ".join(match_comp)} {verb} complete matches, so choose another.'
-            request.session['status'] = 'danger'
-            request.session['icon'] = 'remove-icon'
-            return redirect('results')
-        if len(match_comp) == 0:
-            for match in matches:
-                add_new(request, user, match)
-            return redirect('chatroom')
+        for user_id in matches:
+            create_new_chat(user, user_id)
+        return redirect('chatroom')
     else:
         flash(request, "Invalid Request", "danger")
 
 
-def add_new(request, user, id_):
+def create_new_chat(user, id_):
     success = user.successful_matches
-    success = tuple([x for x in success if x[0] != int(id_)])
-    user.successful_matches = json.dumps(success)
+    success = [x for x in success if x[0] != int(id_)]
+    user.successful_matches = success
     user.save()
-    create_chat(request, user.id, int(id_))
+    create_chat(user.id, int(id_))
+    return
 
 
 # signup verified
@@ -229,36 +213,17 @@ def dashboard(request):
             return redirect('login')
 
         user = User.objects.get(id=request.user.id)
-
-        if user.session is not -1 and user.can_be_matched:
+        if user.user_data == dict():
+            return render(request, 'Account/profile.html')
+        if user.choice_data == dict():
+            user_details = user.user_data
+            user_details['registered'] = True
+            return render(request, 'Account/profile.html', user_details)
+        if not user.has_chat and user.can_be_matched:
+            return redirect('results')
+        if user.has_chat and user.can_be_matched:
             return redirect('chatroom')
-        else:
-            if user.complete_match and user.can_be_matched:
-                return redirect('chatroom')
-        if user.session is not -1 and user.can_be_matched:
-            return redirect('chatroom')
-        else:
-            if user.complete_match and user.can_be_matched:
-                return redirect('chatroom')
-
-            if user.user_data == dict():
-                return render(request, 'Account/profile.html')
-
-            if user.choice_data == dict():
-                user_details = user.user_data
-                user_details['registered'] = True
-                return render(request, 'Account/profile.html', user_details)
-
-            if user.sex == 'male' and not user.complete_match and user.can_be_matched:
-                return redirect('results')
-                # user_details = user.user_data
-                # user_details['registered'] = True
-                # return render(request, 'Account/profile.html', user_details)
-
-            if user.sex == 'female' and not user.complete_match:
-                user_details = user.user_data
-                user_details['registered'] = True
-                return render(request, 'Account/profile.html', user_details)
+        return redirect("dashboard")
 
 
 # verified

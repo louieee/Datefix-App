@@ -148,24 +148,27 @@ def match_user(user):
 	success_list = {}
 	no_list = []
 	# filter users
+	gender = "male" if str(user.sex).lower() == "female" else "female"
 	all_users = User.objects.filter(Q(~Q(id__in=user.jilted_matches)
 	                                  & ~Q(id__in=user.no_matches) &
 	                                  ~Q(user_data=dict())),
-	                                sex__iexact="male", can_be_matched=True).only('id')
+	                                sex__iexact=gender, can_be_matched=True).only('id')
 	all_users = (user for user in all_users if not user.complete_match and not user.is_couple)
 	# compare filtered users with user and return matches
 
-	for peep in all_users:
-		peep_score = compare_users(user, peep)
-		my_score = compare_users(peep, user)
+	for second_user in all_users:
+		print("second user: ", second_user)
+		peep_score = compare_users(user, second_user)
+		my_score = compare_users(second_user, user)
 		try:
 			if peep_score >= 50 and my_score >= 50:
-				success_list[peep.id] = peep_score
+				success_list[second_user.id] = peep_score
 			else:
-				no_list.append(str(peep.id))
+				no_list.append(str(second_user.id))
 		except KeyError:
-			no_list.append(str(peep.id))
+			no_list.append(str(second_user.id))
 	success_list = sorted(success_list.items(), key=lambda x: x[1], reverse=True)
+	print("success_list: ", success_list)
 	user.successful_matches = success_list
 	user.no_matches = no_list
 	user.save()
