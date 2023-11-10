@@ -53,21 +53,13 @@ def end_session(chat_thread, user, you):
     :return:
     """
     for i in [user, you]:
-        user_ = chat_thread.get_receiver(i)
+        second_user = chat_thread.get_receiver(i)
         user_matches = i.matches
-        try:
-            user_matches.remove(int(user_.id))
-            i.matches = user_matches
-            if i.session == 2:
-                i.session = 1
-            elif i.session == 1:
-                i.session = 0
-            i.save()
-        except ValueError:
-            pass
-
-    email_chat(chat_thread, user)
-    email_chat(chat_thread, you)
+        if second_user.id in user_matches:
+            user_matches.remove(int(second_user.id))
+        i.matches = user_matches
+        i.save()
+        email_chat(chat_thread, i)
     chat_thread.delete()
     return
 
@@ -85,10 +77,10 @@ def email_chat(chat_thread, user):
               f'is formally over. Attached to this email address' \
               f'is a text file of the chat between you and {other_user.username}.'
     from Account.utils import send_email
-    send_email(user.username, f'Chat Text File Between You and {user.username}.', message, user.email,
+    send_email(user.username, f'Chat Text File Between You and {user.username}.', message, [user.email],
                None, [user_chat])
     import os
-    os.remove(f"{user_chat['name']}")
+    os.remove(f"{user_chat['filename']}")
 
 
 def reject(you, user):
@@ -209,7 +201,7 @@ def create_chat(your_id: int, user_id: int):
         return 'You Cannot Chat With Yourself.'
     print("not same id")
     if ChatThread.objects.filter(Q(first_user_id=your_id, second_user_id=user_id) |
-                                      Q(first_user_id=user_id, second_user_id=your_id)).exists():
+                                 Q(first_user_id=user_id, second_user_id=your_id)).exists():
         return 'This Chat Thread Object Already Exists'
     user = User.objects.get(id=user_id)
     user_matches = user.matches
@@ -219,10 +211,11 @@ def create_chat(your_id: int, user_id: int):
     secret = get_key(f'{your_id}{datetime.now().timestamp()}{user_id}')
     expiry_date = timezone.now() + timedelta(days=30)
     ChatThread.objects.create(first_user_id=your_id,
-                                     second_user_id=user_id,
-                                     secret=secret, expiry_date=expiry_date)
+                              second_user_id=user_id,
+                              secret=secret, expiry_date=expiry_date)
     print("created chat")
     return
+
 
 def activate_expiration(chat, user):
     """
@@ -237,21 +230,12 @@ def activate_expiration(chat, user):
     if their_msgs.count() > 0 and your_msgs.count() == 0:
         chat.expiry_date = timezone.now() + timedelta(days=7)
         chat.save()
-        if user.session == -1:
-            user.session = 1
-        else:
-            user.session = 2
-        user.save()
-        if receiver.session == -1:
-            receiver.session = 1
-        else:
-            receiver.session = 2
         receiver.save()
         chat.notify_user(user=user, new_match=False)
         chat.notify_user(user=receiver, new_match=False)
 
 
-def purify_email(email:str):
+def purify_email(email: str):
     email = email.lower()
     email = email.replace(' ', '')
     return email

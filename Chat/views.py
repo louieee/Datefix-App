@@ -11,8 +11,6 @@ def chat(request):
         user = User.objects.get(id=request.user.id)
         if user.has_chat and user.can_be_matched:
             return render(request, 'Chat/chat.html')
-        elif user.session == 0:
-            return redirect('end_session')
         return redirect('dashboard')
     return redirect('home')
 
@@ -46,13 +44,13 @@ def create_chat_api(request, user_id):
 
 def test_jilt(request, chat_id):
     try:
-        _chat = ChatThread.objects.get(id=chat_id)
-        if _chat.first_user_id == request.user.id or _chat.second_user_id == request.user.id:
+        chat = ChatThread.objects.get(id=chat_id)
+        if chat.first_user_id == request.user.id or chat.second_user_id == request.user.id:
             from Account.models import User
             user = User.objects.get(id=request.user.id)
-            jilt(_chat, user, _chat.get_receiver(user))
+            jilt(chat, user, chat.get_receiver(user))
             return HttpResponse(
-                f"Jilt was Successful. The Chat between {user.username} and {_chat.get_receiver(user).username} has "
+                f"Jilt was Successful. The Chat between {user.username} and {chat.get_receiver(user).username} has "
                 f"been deleted")
         return HttpResponse("You are not in this chat")
     except ChatThread.DoesNotExist:
@@ -78,16 +76,12 @@ def test_accept(request, chat_id):
 def session_end(request):
     from Account.models import User
     user = User.objects.get(id=request.user.id)
-    import json
     if request.method == 'GET':
-        couple_list = json.loads(user.couple_ids)
+        couple_list = user.couple_ids
         if len(couple_list) > 0:
             from Account.models import Couple
             lists = (Couple.objects.get(id=x).true_details(user.id).items() for x in couple_list)
             return render(request, 'Chat/end_session.html', {"details": lists})
         return render(request, 'Chat/end_session.html')
     if request.method == 'POST':
-        user.session = -1
-        user.couple_ids = '[]'
-        user.save()
         return redirect('dashboard')

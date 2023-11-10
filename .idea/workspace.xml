@@ -28,16 +28,16 @@
     <list default="true" id="9a953797-7a89-49b1-8b38-8033e02ea492" name="Default Changelist" comment="Revert &quot;merge with louieee&quot;&#10;&#10;This reverts commit d2184739">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Account/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/Account/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Account/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/Account/utils.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Account/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/Account/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Chat/consumers.py" beforeDir="false" afterPath="$PROJECT_DIR$/Chat/consumers.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Chat/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/Chat/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Chat/templates/Chat/chat.html" beforeDir="false" afterPath="$PROJECT_DIR$/Chat/templates/Chat/chat.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Chat/templates/Chat/end_session.html" beforeDir="false" afterPath="$PROJECT_DIR$/Chat/templates/Chat/end_session.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Chat/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/Chat/utils.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Chat/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/Chat/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Datefix/algorithms.py" beforeDir="false" afterPath="$PROJECT_DIR$/Datefix/utils.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Datefix/routing.py" beforeDir="false" afterPath="$PROJECT_DIR$/Datefix/routing.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Datefix/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/Datefix/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Chat_with_Datefix-User-99435351.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Chat_with_louisoft.txt" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Datefix/static/js/chat-vue.js" beforeDir="false" afterPath="$PROJECT_DIR$/Datefix/static/js/chat-vue.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/email_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/services/email_service.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -387,7 +387,8 @@
       <workItem from="1699370407443" duration="1398000" />
       <workItem from="1699372661797" duration="3960000" />
       <workItem from="1699376876306" duration="3248000" />
-      <workItem from="1699537907591" duration="6374000" />
+      <workItem from="1699537907591" duration="7278000" />
+      <workItem from="1699567365207" duration="8153000" />
     </task>
     <task id="LOCAL-00001" summary="Revert &quot;merge with louieee&quot;&#10;&#10;This reverts commit d2184739">
       <created>1597921264350</created>

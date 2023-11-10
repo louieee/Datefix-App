@@ -147,7 +147,6 @@ def results(request):
         if match_1 == match_2:
             matches = [match_1]
         user.matches = matches
-        user.session = len(matches)
         user.save()
         for user_id in matches:
             create_new_chat(user, user_id)

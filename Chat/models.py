@@ -87,9 +87,10 @@ class ChatThread(models.Model):
 		for msg in chat_messages:
 			text_file.write(f"{msg.sender.username} "
 			                f"({msg.datetime.time().strftime('%I:%M %p')}): {msg.actual_text}\n")
+		content = base64.b64encode(text_file.read().encode()).decode()
 		text_file.close()
 		return {
-			"content": base64.b64encode(text_file.read().encode()).decode(),
+			"content": content,
 			"type": "text/plain",
 			"filename": f'Chat_with_{other_user.username}.txt'
 		}

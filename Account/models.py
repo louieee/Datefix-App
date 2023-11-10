@@ -19,7 +19,6 @@ class User(AbstractUser):
 	no_matches = models.JSONField(default=list, blank=True)
 	jilted_matches = models.JSONField(default=list, blank=True)
 	couple_ids = models.JSONField(default=list, blank=True)
-	session = models.IntegerField(default=-1)
 	verified = models.BooleanField(default=False)
 	status = models.CharField(max_length=64, default='Offline')
 	can_be_matched = models.BooleanField(default=False)

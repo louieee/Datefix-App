@@ -166,7 +166,7 @@
                   <span v-else></span>
                 </div>
                 <p v-if="chat.last_message">[[chat.last_message.message]]</p>
-                <!-- <small v-if="typing == true"><i>[[chat.first_name]] is Typing...</i></small> -->
+                <small v-if="typing === true"><i>[[chat.first_name]] is Typing...</i></small>
                 <p v-else></p>
               </div><!-- media-body -->
             </div><!-- media -->
@@ -180,9 +180,11 @@
           <div :class="[chat_object.status === 'Online' ? 'az-img-user online' : 'az-img-user']"><img :src="[[chat_object.profile_picture]]" alt=""></div>
           <div class="az-chat-msg-name">
             <h6>[[chat_object.username]]</h6>
-            <small v-if="chat_object.status === 'Online'">Online</small>
-            <small v-if="chat_object.status === 'Offline'">Offline</small>
-            <!-- <small v-if="typing == true"><i>Typing...</i></small> -->
+            <small >[[`${typing === true ? 'is typing...': chat_object.status}`]]</small>
+
+
+
+
             <!-- <small v-else>Last seen: 2 minutes ago</small> -->
           </div>
           <nav class="nav">
@@ -222,7 +224,7 @@
             <a href="" class="nav-link"><i class="fas fa-ellipsis-v"></i></a>
           </nav>
           <!-- @keypress="setTimeout(isTyping(),4000); setInterval(notTyping,5000)" -->
-          <input @keyup.enter="sendMessage" type="text" class="form-control" v-model="message" placeholder="Type your message here...">
+          <input @keyup.enter="sendMessage" @keyup="sendIsTyping" type="text" class="form-control" v-model="message" placeholder="Type your message here...">
           <span @click="sendMessage" class="az-msg-send"><i class="far fa-paper-plane"></i></span>
         </div><!-- az-chat-footer -->
       </template>

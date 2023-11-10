@@ -24,6 +24,7 @@ var app = new Vue({
     approving: false,
     message_id: "",
     typing: false,
+    sent_is_typing: false,
     expiredUsers: [],
     response: "",
     usernames: {},
@@ -83,6 +84,24 @@ var app = new Vue({
         if (data.function === "connect") {
           this.chat_room = data.chat_room;
         }
+
+        if (data.function === "isTyping"){
+          if (data.sender !== this.loggedInUser){
+            if (this.typing !== true){
+              this.typing = true;
+            }
+
+            console.log("is typing", data)
+
+          }
+
+        }
+        if (data.function === "notTyping"){
+          if (data.sender !== this.loggedInUser){
+            this.typing = false;
+          }
+
+        }
         if (data.username !== this.loggedInUser && data.function === "login") {
           this.getAllChats();
         }
@@ -92,7 +111,7 @@ var app = new Vue({
         ) {
           this.message_id = data.message_id;
           this.messageStatus = data.status;
-          scroll()
+          scroll();
         }
         if (data.username === this.loggedInUser && data.function === "accept") {
           if (data.result.response !== undefined) {
@@ -143,7 +162,13 @@ var app = new Vue({
         //   this.$refs.close.click();
         // }
         if (data.result === "succeed" && data.function === "jilt") {
-          location.reload();
+          if (data.username === this.loggedInUser){
+             location.reload();
+          }else{
+            location.replace("http://127.0.0.1:8000/chat/end_session/")
+          }
+
+
         }
       };
     },
@@ -232,6 +257,38 @@ var app = new Vue({
       };
       this.socket.send(JSON.stringify(thread_obj));
       this.message = "";
+      this.sendNotTyping()
+    },
+    sendIsTyping(){
+      let send_not_typing = this.message === "" && this.sent_is_typing === true
+       console.log("is typing", this.message, send_not_typing)
+        if (send_not_typing){
+          this.sendNotTyping()
+          return
+        }
+        else if(this.message === "" && this.sent_is_typing === false){
+          return;
+      }
+
+      if (this.sent_is_typing === false){
+        let thread_obj = {
+        sender_id: this.id,
+        sender: this.loggedInUser,
+        function: "isTyping",
+      };
+      this.socket.send(JSON.stringify(thread_obj));
+      this.sent_is_typing = true
+      }
+
+    },
+    sendNotTyping(){
+       let thread_obj = {
+        sender_id: this.id,
+        sender: this.loggedInUser,
+        function: "notTyping",
+      };
+      this.socket.send(JSON.stringify(thread_obj));
+      this.sent_is_typing = false
     },
     jilt() {
       this.connect_final(this.chat_object, "jilt");
