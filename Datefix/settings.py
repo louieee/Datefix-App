@@ -31,9 +31,7 @@ ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
 
 INSTALLED_APPS = [
 	'channels',
-	'Account',
-	'Chat',
-	'Payment',
+	'core',
 	'django.contrib.admin',
 	'django.contrib.auth',
 	'django.contrib.contenttypes',
@@ -172,11 +170,11 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 LOGOUT_REDIRECT_URL = '/'
 
-AUTH_USER_MODEL = "Account.User"
+AUTH_USER_MODEL = "core.User"
 
 AUTHENTICATION_BACKENDS = [
 	'django.contrib.auth.backends.ModelBackend',
-	'Account.customAuth.EmailAuthBackend'
+	'core.helpers.backends.customAuth.EmailAuthBackend'
 ]
 
 import dj_database_url

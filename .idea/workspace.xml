@@ -27,7 +27,62 @@
   <component name="ChangeListManager">
     <list default="true" id="9a953797-7a89-49b1-8b38-8033e02ea492" name="Default Changelist" comment="Revert &quot;merge with louieee&quot;&#10;&#10;This reverts commit d2184739">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Chat/templates/Chat/chat.html" beforeDir="false" afterPath="$PROJECT_DIR$/Chat/templates/Chat/chat.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Account/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Account/admin.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Account/apps.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Account/customAuth.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Account/models.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Account/templates/Account/account-not-found.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Account/templates/Account/account-verified.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Account/templates/Account/datalists.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Account/templates/Account/edit-profile.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Account/templates/Account/login.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Account/templates/Account/mailer.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Account/templates/Account/personality_result.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Account/templates/Account/profile.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Account/templates/Account/results.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Account/templates/Account/results_m.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Account/templates/Account/test.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Account/templates/Account/verification-link-sent.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Account/tests.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Account/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/urls/account.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Account/utils.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Account/views.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Chat/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Chat/admin.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Chat/apps.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Chat/consumers.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Chat/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/models/chat.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Chat/signals.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Chat/templates/Chat/chat.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Chat/templates/Chat/end_session.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Chat/tests.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Chat/urls.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Chat/utils.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Chat/views.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Chat/work.code-workspace" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Datefix/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/Datefix/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Datefix/static/js/chat-vue.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Datefix/static/js/chat.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Datefix/static/js/conditional-form.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Datefix/static/js/faq.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Datefix/static/js/msform.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Datefix/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/Datefix/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Datefix/views.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Payment/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Payment/admin.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Payment/apps.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Payment/models.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Payment/templates/Payment/match.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Payment/templates/Payment/pay.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Payment/templates/Payment/rave_redirect.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Payment/templates/Payment/test.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Payment/tests.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Payment/urls.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Payment/views.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/email_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/services/email_service.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/ravepay_services.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/services/ravepay_services.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/sendgrid_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/services/sendgrid_service.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -68,33 +123,36 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "dart.analysis.tool.window.visible": "false",
+    "last_opened_file_path": "/Users/user/PycharmProjects/Datefix/core/urls/apis",
+    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;DatabaseDriversLRU&quot;: [
-      &quot;postgresql&quot;
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "postgresql"
     ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\hp\PycharmProjects\datefix-1\services" />
-      <recent name="C:\Users\hp\PycharmProjects\datefix-1\Datefix\static\images" />
-      <recent name="C:\Users\hp\PycharmProjects\datefix-1\Datefix\static" />
-      <recent name="C:\Users\hp\PycharmProjects\datefix-1\Account\templates\Account" />
+      <recent name="$PROJECT_DIR$/core/urls/apis" />
+      <recent name="$PROJECT_DIR$/core/apis" />
+      <recent name="$PROJECT_DIR$/templates" />
+      <recent name="$PROJECT_DIR$/core/helpers/backends" />
+      <recent name="$PROJECT_DIR$/core/urls" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\hp\PycharmProjects\datefix-1\services" />
-      <recent name="C:\Users\hp\PycharmProjects\datefix-1" />
-      <recent name="C:\Users\hp\PycharmProjects\datefix-1\Payment" />
-      <recent name="C:\Users\hp\PycharmProjects\datefix-1\Secret" />
+      <recent name="$PROJECT_DIR$/Datefix/static/js/frontend" />
+      <recent name="$PROJECT_DIR$/Datefix/static/js/src" />
+      <recent name="$PROJECT_DIR$/core" />
+      <recent name="$PROJECT_DIR$/core/urls" />
+      <recent name="$PROJECT_DIR$/core/payment" />
     </key>
   </component>
   <component name="RestClientSettings">
@@ -380,7 +438,8 @@
       <workItem from="1699537907591" duration="7278000" />
       <workItem from="1699567365207" duration="8202000" />
       <workItem from="1699603884590" duration="100000" />
-      <workItem from="1699832505827" duration="440000" />
+      <workItem from="1699832505827" duration="6336000" />
+      <workItem from="1699886766081" duration="6397000" />
     </task>
     <task id="LOCAL-00001" summary="Revert &quot;merge with louieee&quot;&#10;&#10;This reverts commit d2184739">
       <created>1597921264350</created>
